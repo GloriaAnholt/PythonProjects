@@ -29,25 +29,18 @@ terms = {
 	'has-a': 'A phrase to say that something is composed of other things or contains trait, as in "a salmon **** mouth."'
 	}
 	
-
-
-# This way we don't have to know how many things there are, 
-# Range() creates our array for the loop
+	
 items_total = range(0, len(terms))
 
 while len(items_total) != 0:
 	random.shuffle(items_total)
-#	print "Items_total at top: ", items_total  # debugging how to pop()
 	i = items_total[-1]
-#	print i
 	print terms.values()[i] 
 	guess = raw_input('Term: ').lower()
 
 	if guess == terms.keys()[i]:
 		items_total.pop()
 		print "Correct! \n"
-#		print "Items_total at end: ", items_total
-		
 	else:
 		print "Try again. \n"
 		
