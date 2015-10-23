@@ -4,15 +4,14 @@
 # of Learning Python the Hard Way and modified definitions from Zeb's list
 # and it makes a little reverse flashcard program to study them.
 # 
-# This time, instead of making an array and using a random element from
-# my array to call from my dict, then deleting elements from the array,
-# I modify the dict itself.
-
+# Once again, this time with a class for the Deck object. Later, I should
+# make a card object. (Cards: have a term, an answer, and the ability to 
+# check if a guess is correct).
 
 
 import random
 
-terms = {
+my_terms = {
 	'class': 'These are used (or "instantiated") to create objects. They have fields which represent quality the thing has, and methods which represent what the thing can do.',
 	'object': 'This has two possible meanings 1. The most basic type of thing, 2. Any instance of some thing.',
 	'instance': 'This is what you get when you tell Python to create a class.',
@@ -24,22 +23,37 @@ terms = {
 	'is-a': 'A phrase to say that something inherits from another class, as in a "salmon" **** "fish".',
 	'has-a': 'A phrase to say that something is composed of other things or contains trait, as in "a salmon **** mouth."'
 	}
-	
 
-while len(terms) != 0:
-	print "Items_total at top: ", len(terms)  
-	num = random.randrange(0, len(terms))
-	print num
-	print terms.values()[num], "\n"
-	guess = raw_input('The corresponding term is: ').lower()
-	print terms.keys()[num], "\n"
+
+class Deck(object):
 	
-	if guess == terms.keys()[num]:
-		print "Correct! \n"
-		del terms[guess]
+	def __init__(self, terms):
+		self.terms = terms
+
+	def have_terms(self):
+		if len(self.terms) > 0:
+			return True
+		else:
+			return False
+
+	def random_card(self):
+		num = random.randrange(0, len(self.terms))
+		term = self.terms.keys()[num]
+		definition = self.terms.values()[num]
+		return (term, definition)
 		
+	def delete_card(self, guess):
+		del self.terms[guess]
+
+	
+my_deck = Deck(my_terms)
+
+while my_deck.have_terms():
+	term, definition = my_deck.random_card()
+	print definition
+	guess = raw_input('The corresponding term is: ').lower()
+	if guess == term:
+		my_deck.delete_card(guess)
+		print "Correct! \n"
 	else:
 		print "Try again. \n"
-		
-
-
