@@ -1,15 +1,14 @@
-# 10/22/2015
+# 10/23/2015
 #
 # This program creates a dictionary which has the terms from Exercise 41
 # of Learning Python the Hard Way and modified definitions from Zeb's list
 # and it makes a little reverse flashcard program to study them.
 # 
-# Once again, this time with a class for the Deck object. Later, I should
-# make a card object. (Cards: have a term, an answer, and the ability to 
-# check if a guess is correct).
+# Once again, this time turning the terms dict into a list of dicts.
 
 
 import random
+		
 
 my_terms = {
 	'class': 'These are used (or "instantiated") to create objects. They have fields which represent quality the thing has, and methods which represent what the thing can do.',
@@ -25,6 +24,12 @@ my_terms = {
 	}
 
 
+my_list = []
+
+for k, v in my_terms.items():
+	my_list.append({"term": k, "definition": v})
+
+
 class Deck(object):
 	
 	def __init__(self, terms):
@@ -36,6 +41,7 @@ class Deck(object):
 		else:
 			return False
 
+#this can be done in fewer lines -- fix it
 	def random_card(self):
 		num = random.randrange(0, len(self.terms))
 		term = self.terms.keys()[num]
@@ -44,8 +50,8 @@ class Deck(object):
 		
 	def delete_card(self, guess):
 		del self.terms[guess]
-
-	
+		
+		
 my_deck = Deck(my_terms)
 
 while my_deck.have_terms():
@@ -57,3 +63,4 @@ while my_deck.have_terms():
 		print "Correct! \n"
 	else:
 		print "Try again. \n"
+
