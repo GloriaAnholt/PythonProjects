@@ -4,15 +4,17 @@
 
 import re
 
-in_file = open("advent.02.data.py", "r")
-data = in_file.read()
 
 
-
-num = re.compile('(?P<l>[0-9]+)x(?P<w>[0-9]+)x(?P<h>[0-9]+)', re.M)
-box_tuple = re.findall(num, data)
-box_list = [list(box) for box in box_tuple]
-
+def create_box_list():
+	
+	in_file = open("advent.02.data.py", "r")
+	box_list = []
+	
+	for line in in_file:
+		box_list.append(sorted([int(x) for x in line.split('x')]))
+	
+	return box_list
 
 
 def calculate_paper(box_list):
@@ -30,10 +32,20 @@ def calculate_paper(box_list):
 	
 
 def calculate_ribbon(box_list):
+
+	total_ribbon = 0
 	
-	sorted_boxes = [sorted(x) for x in box_list]
-	print sorted_boxes
+	for box in box_list:
+		a, b, c = int(box[0]), int(box[1]), int(box[2])
+		ribbon = 2*(a+b)
+		bow = a*b*c
+		total_ribbon += ribbon + bow
+	
+	print total_ribbon
+	
+		
 		
 	
-		
+box_list = create_box_list()
 calculate_ribbon(box_list)
+
