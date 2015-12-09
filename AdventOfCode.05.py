@@ -21,14 +21,15 @@ def line_checker(data):
 	
 	for line in data:
 		if ("ab" in line) or ("cd" in line) or ("pq" in line) or ("xy" in line):
-			print "naughty letter combo found"
+			pass
 		elif re.search(double, line) == None:
-			print "naughty: no doubles"
+			pass
 		elif re.search(vowels, line) == None:
-			print "naughty: not enough vowels"
+			pass
 		else:
-			print "nice"
+			nice += 1
+	print nice
 			
 			
-			
-line_checker(["ugknbfddgicrmopn", "jchzalrnumimnmhp", "haegwjzuvuyypxyu", "dvszwmarrgswjxmb", "aeioucss"])
+line_checker(in_file)
+
