@@ -44,24 +44,18 @@ def toggle_lights(inst, grid):
 	
 	for line in inst:
 		status, x1, y1, x2, y2 = line[0], line[1], line[2], line[3], line[4]
-		
-		if status == 0:			# turn off lights in grid
-			for row in range(y1,y2+1):
-				for light in range(x1,x2+1):
-					grid[row][light] = 0			
-			
-		if status == 1:			# turn on lights in grid
-			for row in range(y1,y2+1):
-				for light in range(x1,x2+1):
+						
+		for row in range(y1,y2+1):
+			for light in range(x1,x2+1):
+				if status == 0:				# turn off lights in grid
+					grid[row][light] = 0
+				if status == 1:				# turn on lights in grid
 					grid[row][light] = 1
-			
-		if status == 2:			# toggle lights in grid
-			for row in range(y1,y2+1):
-				for light in range(x1,x2+1):
+				if status == 2:				# toggle lights in grid
 					if grid[row][light] == 0:
 						grid[row][light] = 1
 					else:
-						grid[row][light] = 0
+						grid[row][light] = 0	
 			
 	return grid
 
