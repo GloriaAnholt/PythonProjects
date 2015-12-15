@@ -12,7 +12,7 @@ def create_instructions():
 	in_file = open("advent.06.data.py", "r")
 	num = re.compile(r'(?P<x1>[0-9]{1,3}),(?P<y1>[0-9]{1,3}).* (?P<x2>[0-9]{1,3}),(?P<y2>[0-9]{1,3})')
 	instructions = []
-	status = 0     # let's try this with 1: on, 2: off, 3: toggle
+	status = 0     # let's try this with 0: off, 1: on, 2: toggle
 	
 	for line in in_file:
 		nums = re.search(num, line)
@@ -24,7 +24,7 @@ def create_instructions():
 		elif "turn on" in line:
 			status = 1
 		elif "toggle" in line:
-			status = 3
+			status = 2
 
 		instructions.append([status, x1, y1, x2, y2])
 	
@@ -75,38 +75,5 @@ def calculate_lights(grid):
 instructions = create_instructions()
 grid = initialize_grid()
 
-print calculate_lights(toggle_lights(instructions, grid))	
-	
-
-'''	
-TIMING TESTING
-
-
-def init1():
-	lighting_grid = []
-	light_row = [0 for i in range(1000)]
-	
-	
-def init2():
-	lighting_grid = []
-	for i in range(1000):
-		lighting_grid.append(0)
-	
-def init3():	
-	lighting_grid = [0] * 1000
-	print lighting_grid
-
-if __name__ == '__main__':
-	import timeit
-	generator = timeit.repeat("init1()", setup="from __main__ import init1", number=10000, repeat=10)
-	print generator
-	for_loop = timeit.repeat("init2()", setup="from __main__ import init2", number=10000, repeat=10)
-	print for_loop
-	multip = timeit.repeat("init3()", setup="from __main__ import init3", number=10000, repeat=10)
-	print multip
-'''
-
-	
-		
-		
+print calculate_lights(toggle_lights(instructions, grid))
 	
