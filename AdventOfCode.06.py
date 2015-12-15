@@ -25,6 +25,8 @@ def create_instructions():
 			status = 1
 		elif "toggle" in line:
 			status = 2
+		else:
+			print "Something went wrong here."
 
 		instructions.append([status, x1, y1, x2, y2])
 	
