@@ -1,5 +1,5 @@
 # Advent Calendar of Code: 06 
-# 12.08.15
+# 12.15.15
 # @totallygloria
 
 import re
@@ -18,17 +18,13 @@ def create_instructions():
 		nums = re.search(num, line)
 		x1, y1 = int(nums.group('x1')), int(nums.group('y1'))
 		x2, y2 = int(nums.group('x2')), int(nums.group('y2'))
-		print x1, y1, x2, y2
 		
 		if "turn off" in line:
 			status = 0
-			print status
 		elif "turn on" in line:
 			status = 1
-			print status
 		elif "toggle" in line:
 			status = 3
-			print status
 
 		instructions.append([status, x1, y1, x2, y2])
 	
@@ -45,8 +41,6 @@ def initialize_grid():
 	
 def toggle_lights(inst, grid):
 
-	#inst = [[1, 0, 0, 4, 4], [2, 0, 0, 1, 1]]
-	#grid = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 	
 	for line in inst:
 		status, x1, y1, x2, y2 = line[0], line[1], line[2], line[3], line[4]
@@ -84,8 +78,10 @@ def calculate_lights(grid):
 	return light_count
 
 
-print calculate_lights(toggle_lights(create_instructions(), initialize_grid()))
-	
+instructions = create_instructions()
+grid = initialize_grid()
+
+print calculate_lights(toggle_lights(instructions, grid))	
 	
 
 '''	
