@@ -7,6 +7,7 @@ class Queue(object):
     def __init__(self):
         self.first = None
         self.last = None
+        self.queue_size = 0
 
     def enqueue(self, item):
         # takes an item, adds to the end of queue, returns nothing
@@ -18,16 +19,27 @@ class Queue(object):
             self.last.behind = new_element
 
         self.last = new_element
+        self.queue_size += 1
 
     def dequeue(self):
         # takes no args, removes and returns front item
         removed = self.first
         self.first = self.first.behind
+        self.queue_size -= 1
         return removed.item
 
- #   def size(self):
- #       # takes no args, returns an int
- #       return len(self.queue)
+    def size(self):
+        # takes no args, returns an int
+        return self.queue_size
+
+    def inefficient_size(self):
+    # walks list from front, returns an int. Should be O(n) to calculate
+        counter = 0
+        current = self.first
+        while current != None:
+            counter +=1
+            current = current.behind
+        return counter
 
     def is_empty(self):
         return self.first == None

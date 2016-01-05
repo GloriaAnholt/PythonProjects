@@ -28,5 +28,19 @@ class QueueTester(unittest.TestCase):
         self.assertEqual(queue.dequeue(), 'thingi')
         self.assertTrue(queue.is_empty())
 
+    def test_size(self):
+        queue = Queue()
+        self.assertEqual(queue.size(), 0)
+        self.assertEqual(queue.inefficient_size(), 0)
+        queue.enqueue('thing 1')
+        queue.enqueue('thing2')
+        queue.enqueue('thing3')
+        self.assertEqual(queue.size(), 3, 'size works')
+        self.assertEqual(queue.inefficient_size(), 3, 'inefficient_size works')
+        queue.dequeue()
+        self.assertEqual(queue.size(), 2)
+        self.assertEqual(queue.size(), queue.inefficient_size(), 'size methods equal')
+
+
 if __name__ == '__main__':
     unittest.main()
