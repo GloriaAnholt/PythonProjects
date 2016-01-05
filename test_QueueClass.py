@@ -22,6 +22,11 @@ class QueueTester(unittest.TestCase):
         queue.enqueue('a thing')
         self.assertTrue(queue.has_items())
 
+    def test_dequeue(self):
+        queue = Queue()
+        queue.enqueue('thingi')
+        self.assertEqual(queue.dequeue(), 'thingi')
+        self.assertTrue(queue.is_empty())
 
 if __name__ == '__main__':
     unittest.main()

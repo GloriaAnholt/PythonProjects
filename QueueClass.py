@@ -11,15 +11,19 @@ class Queue(object):
     def enqueue(self, item):
         # takes an item, adds to the end of queue, returns nothing
         new_element = Element(item)
-        new_element.ahead = self.last
-        self.last = new_element
 
         if self.is_empty():
             self.first = new_element
+        else:
+            self.last.behind = new_element
+
+        self.last = new_element
 
     def dequeue(self):
         # takes no args, removes and returns front item
-        removed = self.queue.behind
+        removed = self.first
+        self.first = self.first.behind
+        return removed.item
 
  #   def size(self):
  #       # takes no args, returns an int
@@ -32,10 +36,12 @@ class Queue(object):
         # takes no args, returns a boolean
         return not self.is_empty()
 
+
 class Element(object):
     def __init__(self, value):
         self.item = value
-        self.ahead = self
+        self.behind = None
+
 
 
 
