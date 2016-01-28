@@ -5,6 +5,7 @@
 from QueueClass import Queue
 
 
+
 def player_builder():
     print "Let's play hot potato! Please enter the names of the players, type 'DONE' when done."
     name = raw_input('> ')
@@ -37,5 +38,6 @@ def hot_potato(players):
         hot_potato(players)
 
 
-players = player_builder()
-hot_potato(players)
+def main():
+    players = player_builder()
+    hot_potato(players)
