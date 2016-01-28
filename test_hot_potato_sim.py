@@ -6,9 +6,10 @@ import unittest
 from StringIO import StringIO
 
 from hot_potato_sim import player_builder
+from hot_potato_sim import hot_potato
 from QueueClass import Queue
 
-class PlayerTester(unittest.TestCase):
+class PotatoTester(unittest.TestCase):
 
     def test_player_builder(self):
         test_input = StringIO("Gloria\nSchwern\nFrankie\nEric\nDONE")
@@ -22,6 +23,15 @@ class PlayerTester(unittest.TestCase):
         no_players = player_builder()
         self.assertEqual(no_players.size(), 0)
 
+    def test_hot_potato(self):
+        players = Queue()
+        names = ["Gloria", "Schwern", "Frankie", "Eric"]
+        for name in names:
+            players.enqueue(name)
+        test_input = StringIO("1\n1\n1\n")
+        sys.stdin = test_input
+        sys.stdout = StringIO()
+        self.assertEqual(hot_potato(players), "Gloria")
 
 
 if __name__ == '__main__':

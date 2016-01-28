@@ -33,11 +33,13 @@ def hot_potato(players):
     print "%s is out!" % (current)
 
     if players.size() == 1:
-        print players.dequeue(), "wins!"
+        return players.dequeue()
     else:
-        hot_potato(players)
+        return hot_potato(players)
 
 
 def main():
     players = player_builder()
-    hot_potato(players)
+    win = hot_potato(players)
+    print win, "wins!"
+
