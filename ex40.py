@@ -8,7 +8,7 @@ class Song(object):
 	
 	def sing_me_a_song(self):
 		for line in self.lyrics:
-			print line 
+			print line
 
 happy_bday = Song(["Happy birthday to you",
 					"I don't want to get sued",
@@ -30,7 +30,7 @@ bulls_on_parade.sing_me_a_song()
 cecila.sing_me_a_song()
 
 
-lyrics = "I hear the sound of silence"
+lyrics = ["I hear the sound of silence"]
 
 sound_of_silence = Song(lyrics)
 
