@@ -1,33 +1,15 @@
-# 10/23/2015
+# 10/26/2015
 #
 # This program creates a dictionary which has the terms from Exercise 41
 # of Learning Python the Hard Way and modified definitions from Zeb's list
 # and it makes a little reverse flashcard program to study them.
 # 
-# Once again, this time turning the terms dict into a list of dicts.
+# Once again, this creating my list of dicts from a CSV file I open. 
+# It also has a list of dicts, shuffles it, then pops the dict out of the
+# list if the user guesses the correct term/def.
 
 
-import random
-		
-
-my_terms = {
-	'class': 'These are used (or "instantiated") to create objects. They have fields which represent quality the thing has, and methods which represent what the thing can do.',
-	'object': 'This has two possible meanings 1. The most basic type of thing, 2. Any instance of some thing.',
-	'instance': 'This is what you get when you tell Python to create a class.',
-	'def': 'The syntax used to make a function inside of a class',
-	'self': 'Inside the functions in a class, this is a variable for the instance or object being accessed.',
-	'inheritance': 'The concept that one class can receive the traits of another class, much like genetics.',
-	'composition': 'The concept that a class can have other classes as parts, much like how a car has wheels.',
-	'attribute': 'A property classes have that are from composition, are usually variables.',
-	'is-a': 'A phrase to say that something inherits from another class, as in a "salmon" **** "fish".',
-	'has-a': 'A phrase to say that something is composed of other things or contains trait, as in "a salmon **** mouth."'
-	}
-
-
-my_list = []
-
-for k, v in my_terms.items():
-	my_list.append({"term": k, "definition": v})
+import random		
 
 
 class Deck(object):
@@ -41,26 +23,61 @@ class Deck(object):
 		else:
 			return False
 
-#this can be done in fewer lines -- fix it
 	def random_card(self):
-		num = random.randrange(0, len(self.terms))
-		term = self.terms.keys()[num]
-		definition = self.terms.values()[num]
-		return (term, definition)
+		random.shuffle(self.terms)
+		return self.terms[-1]
 		
-	def delete_card(self, guess):
-		del self.terms[guess]
+	def delete_card(self):
+		self.terms.pop()
 		
 		
-my_deck = Deck(my_terms)
+
+def create_list():
+	print "What file would you like to open?"
+	my_file = raw_input("> ")
+	my_text = open(my_file)
+	my_list = []
+	for line in my_text.readlines():
+		k, v = line.split(',')
+		my_list.append({"term": k, "definition": v})
+	return my_list
+
+
+
+my_list = create_list()
+my_deck = Deck(my_list)
+
+print "Which side do you want to practice? Terms or definitions?"
+set_side = raw_input('> ').lower()
+
+while True:
+	if set_side == "terms" or set_side == "definitions":
+		break
+	else:
+		print "Please select 'terms' or 'definitions'"
+		set_side = raw_input('> ').lower()
+
+
 
 while my_deck.have_terms():
-	term, definition = my_deck.random_card()
-	print definition
-	guess = raw_input('The corresponding term is: ').lower()
-	if guess == term:
-		my_deck.delete_card(guess)
-		print "Correct! \n"
-	else:
-		print "Try again. \n"
+	current_card = my_deck.random_card()
+	if set_side == 'terms':
+		print current_card['term']
+		guess = raw_input('The corresponding definition is: ').lower()
+		if guess == current_card['definition']:
+			print "Correct! \n"
+			my_deck.delete_card()
+		else:
+			print "Incorrect. \n"
+	elif set_side == 'definitions':
+		print current_card['definition']
+		guess = raw_input('The corresponding terms is: ').lower()
+		if guess == current_card['term']:
+			print "Correct! \n"
+			my_deck.delete_card()
+		else:
+			print "Incorrect. \n"
+
+		
+
 
