@@ -47,36 +47,31 @@ def create_list():
 my_list = create_list()
 my_deck = Deck(my_list)
 
-print "Which side do you want to practice? Terms or definitions?"
+print "Which side do you want to practice? Type 'term' or 'definition'"
 set_side = raw_input('> ').lower()
 
-while True:
-	if set_side == "terms" or set_side == "definitions":
-		break
-	else:
-		print "Please select 'terms' or 'definitions'"
-		set_side = raw_input('> ').lower()
+while set_side != 'term' and set_side != 'definition':
+	print "Please choose 'term' or 'definition'"
+	set_side = raw_input('> ').lower()
+	
+if set_side == 'term':
+	other_side = 'definition'
+elif set_side == 'definition':
+	other_side = 'term'
 
 
+# for each card in this deck, do stuff
 
 while my_deck.have_terms():
 	current_card = my_deck.random_card()
-	if set_side == 'terms':
-		print current_card['term']
-		guess = raw_input('The corresponding definition is: ').lower()
-		if guess == current_card['definition']:
-			print "Correct! \n"
-			my_deck.delete_card()
-		else:
-			print "Incorrect. \n"
-	elif set_side == 'definitions':
-		print current_card['definition']
-		guess = raw_input('The corresponding terms is: ').lower()
-		if guess == current_card['term']:
-			print "Correct! \n"
-			my_deck.delete_card()
-		else:
-			print "Incorrect. \n"
+	print current_card[set_side]
+	guess = raw_input('The corresponding definition is: ').lower()
+	if guess == current_card[other_side]:
+		print "Correct! \n"
+		my_deck.delete_card()
+	else:
+		print "Incorrect. \n"
+
 
 		
 
