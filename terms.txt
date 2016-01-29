@@ -13,4 +13,4 @@ instance variable, is defined with the self.attribute - each instance of the cla
 global variable, a variable that is available everywhere in the program regardless of scope.
 __init__(), this function always takes self as the first argument - if you add additional attributes to the init function they become required values for the instance/object created. self.attribute_a = attribute_a sets the value of that instance to the value passed when creating the object
 override, when the child class does not inherit particular objects or methods from the parent class but instead the child class re-creates the method.
-parents init, you can use the local init to do stuff and then use super function to call the parents init stuff: super(Child, self).__init__()
+parents init, you can use the local init to do stuff and then use super function to call the parents init stuff: super(Child/ self).__init__()
