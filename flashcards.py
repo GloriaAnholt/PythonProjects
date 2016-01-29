@@ -8,6 +8,8 @@
 # It also has a list of dicts, shuffles it, then pops the dict out of the
 # list if the user guesses the correct term/def.
 
+# TO DO: Reminder the player of the correct def/term so this isn't the most
+# aggravating program in the history of educational software.
 
 import random		
 
