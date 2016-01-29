@@ -14,22 +14,15 @@ import random
 
 class Deck(object):
 	
-	def __init__(self, terms):
-		self.terms = terms
+	def __init__(self, cards):
+		self.cards = cards
 
-	def have_terms(self):
-		if len(self.terms) > 0:
-			return True
-		else:
-			return False
-
-	def random_card(self):
-		random.shuffle(self.terms)
-		return self.terms[-1]
+	def get_random_card(self):
+		return self.cards.pop(0)
 		
-	def delete_card(self):
-		self.terms.pop()
-		
+	def return_card(self, card):
+		self.cards.append(card)
+		random.shuffle(self.cards)
 		
 
 def create_list():
@@ -45,7 +38,9 @@ def create_list():
 
 
 my_list = create_list()
+random.shuffle(my_list)
 my_deck = Deck(my_list)
+print "There are %d cards in your deck" % len(my_list)
 
 print "Which side do you want to practice? Type 'term' or 'definition'"
 set_side = raw_input('> ').lower()
@@ -62,17 +57,15 @@ elif set_side == 'definition':
 
 # for each card in this deck, do stuff
 
-while my_deck.have_terms():
-	current_card = my_deck.random_card()
+for card in range(len(my_deck.cards)):
+	current_card = my_deck.get_random_card()
 	print current_card[set_side]
 	guess = raw_input('The corresponding definition is: ').lower()
 	if guess == current_card[other_side]:
 		print "Correct! \n"
-		my_deck.delete_card()
 	else:
 		print "Incorrect. \n"
+		my_deck.return_card(current_card)
 
-
-		
 
 
