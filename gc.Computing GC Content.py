@@ -1,50 +1,56 @@
 # Rodalind: Computing GC Content
 # 11.30.15
+# @totallygloria
 
 
 in_file = open("gc.Computing GC Content.data.py", "r")
+raw_string = in_file.read()
+raw_string = raw_string.replace('\n', '')
+raw_list = raw_string.split(">")
+del raw_list[0]
 
+#sting[">":"\n":1]
 
-
-def build_strand_dict(in_file):
-
-	strand_list = []
-
-	for line in in_file:
-		title, strand = line.split('>')
-		if line[0] == ">":	
-			title = line.rstrip('\n')
-			next_line = line.next()
-			strand = next_line.rstrip("\n")
-			strand_list.append({"title": title, "strand": strand})
-	return strand_list
-
-strand_list = build_strand_dict(in_file)	
-	
-for i in strand_list:
-	print i
+def build_strand_dicts(in_list):					
 		
+		strand_list = []
+		
+		for entry in in_list:
+			title = ""
+			strand = ""
+			for char in entry:
+				if char not in "ACGT":
+					title += char	
+				elif char != "R":
+					strand += char
+				length = len(strand)
+			strand_list.append({"title": title, "strand": strand, "length": length})
+		return strand_list
+			
 	
-def count_cg_pairs(strand_list):
+def most_cg_pairs(strand_list):
 
-	dict_title = ""
-
+	strand_title = ""
+	largest_count = 0
+	percentage_val = 0
+	
 	for d in strand_list:
-		current_count = 0
-		largest_count = 0
-		percentage_val = 0
 		current_strand = d["strand"]
-		strand_length = len(current_strand)
+		current_count = 0
 		for base in current_strand:
 			if base in "CG":
 				current_count += 1
+		print current_count
+			
 		if current_count > largest_count:
 			largest_count = current_count
-			dict_title = d["title"]
-			percentage_val = float(largest_count * 100) / float(strand_length)		
+			strand_title = d["title"]
+			percentage_val = float(largest_count * 100) / d["length"]		
 	
-	print dict_title, percentage_val
-		
+	print strand_title, percentage_val
+	
 
+strand_list = build_strand_dicts(raw_list)
 
-count_cg_pairs(strand_list)
+most_cg_pairs(strand_list)
+
