@@ -63,9 +63,10 @@ def do_the_thing(current_string, match_percentage, correct_indices):
 		current_string, match_percentage, correct_indices = check_string(updated_string)
 		total_count += 1
 		if total_count % 10 == 0:
-			print current_string, match_percentage, correct_indices
+			print current_string, match_percentage
 			
-	print total_count
+	print current_string, match_percentage
+	print "That took", total_count, "rounds to complete"
 
 	
 do_the_thing(current_string, match_percentage, correct_indices)

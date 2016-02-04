@@ -17,6 +17,10 @@ def player_builder():
 
     return players
 
+# to do list: make how_many_passes separated and call it, have it return passes
+# make an eliminate_player function which returns a player name, declare them out in the game
+# write tests for both of these separated functions
+
 def hot_potato(players):
     try:
         passes = abs(int(raw_input('How many passes should we do? Enter a number: ')))
@@ -43,3 +47,5 @@ def main():
     win = hot_potato(players)
     print win, "wins!"
 
+
+main()
