@@ -5,28 +5,27 @@
 import re
 
 in_file = open("gc.Computing GC Content.data.py", "r")
-raw_dna = in_file.read()
-raw_dna = raw_dna.replace('\n', '')
-
+raw_data = in_file.read()
+raw_data = raw_data.replace('\n', '')
 
 def build_strand_dicts(raw_data):					
-		
-	title = re.compile("Rosalind_[0-9]{4}")
-	strand = re.compile(r"(?m)([CGAT]+)")
-	titles = title.findall(raw_data)
-	strands = strand.findall(raw_data)
-	strand_dict = {}
-	for i in range(len(titles)):
-		strand_dict[titles[i]] = strands[i]
-	print strand_dict	
+
+	massaged_data = re.findall('>(Rosalind_[0-9]{4})([CGAT]+)', raw_data)
+	strand_list = []
+	for k,v in massaged_data:
+		strand_list.append({"title": k, "strand": v})
+	return strand_list
 	
 def most_cg_pairs(strands):
-
+	
 	pass
-	#largest_cg = max(strands.values()["cg_len"])
-	#print largest_cg
-
-build_strand_dicts(raw_dna)
 
 
+
+strand_dict = build_strand_dicts(raw_data)
+
+for val in strand_dict:
+	print val
+
+# most_cg_pairs(strand_dict)
 
