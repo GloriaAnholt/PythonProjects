@@ -1,0 +1,16 @@
+class, These are used (or "instantiated") to create objects. They have fields which represent qualities - attributes - the thing has and methods which represent what the thing can do.
+object, This has two possible meanings 1. The most basic type of thing 2. Any instance of some thing.
+instance, This is what you get when you tell Python to create a class.
+def, The syntax used to make a function inside of a class
+self, Inside the functions in a class this is the conventional name for the variable used to create the instance or object being accessed.
+inheritance, The concept that one class can receive the traits of another class much like genetics.
+composition, The concept that a class can have other classes as parts. Accomplished by defining the other inside the self -- eg self.other = Other() and self.other.othersmodule()
+attribute, A property classes have that are from composition are usually variables.
+is-a, A phrase to say that something inherits from another class as in a "salmon" **** "fish".
+has-a, A phrase to say that something is composed of other things or contains trait as in "a salmon **** mouth."
+member variable, is defined above the init function - all members of the class have this attribute. Conversely these are variables available to all members of a class.
+instance variable, is defined with the self.attribute - each instance of the class has this attribute
+global variable, a variable that is available everywhere in the program regardless of scope.
+__init__(), this function always takes self as the first argument - if you add additional attributes to the init function they become required values for the instance/object created. self.attribute_a = attribute_a sets the value of that instance to the value passed when creating the object
+override, when the child class does not inherit particular objects or methods from the parent class but instead the child class re-creates the method.
+parents init, you can use the local init to do stuff and then use super function to call the parents init stuff: super(Child/ self).__init__()
