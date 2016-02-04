@@ -1,16 +1,28 @@
 # IPRB: Mendel's First Law
-# 11.30.15
+# 12.01.15
 # @totallygloria
 
-k, m, n = 27.0, 21.0, 17.0
-total_poss = (k + m + n - 1) * 3.0
+k, m, n = 24.0, 15.0, 27.0
+total = k + m + n
 
-k_poss = ((k-1)*(1.0)) + (m*(1.0)) + (n*(1.0))
-m_poss = (k*(4.0/4)) + ((m-1)*(3.0/4)) + (n*(2.0/4))
-n_poss = (k*(4.0/4)) + (m*(2.0/4)) + ((n-1)*(0.0/4))
+print total
 
-print k_poss, m_poss, n_poss
-print (k_poss + m_poss + n_poss) / total_poss
+kk = (k/total) * ((k-1)/(total-1)) * 1.0
+km = (k/total) * (m/(total-1)) * 1.0
+kn = (k/total) * (n/(total-1)) * 1.0
+
+mk = (m/total) * (k/(total-1)) * 1.0
+mm = (m/total) * ((m-1)/(total-1)) * 0.75
+mn = (m/total) * (n/(total-1)) * 0.50
+
+nk = (n/total) * (k/(total-1)) * 1.0
+nm = (n/total) * (m/(total-1)) * 0.50
+nn = (n/total) * ((n-1)/(total-1)) * 0.0
+
+total_poss = kk + km + kn + mk + mm + mn + nk + nm + nn
+
+print total_poss
+
 
 
 
