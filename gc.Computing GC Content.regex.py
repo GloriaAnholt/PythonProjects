@@ -13,7 +13,14 @@ def build_strand_dicts(raw_data):
 	massaged_data = re.findall('>(Rosalind_[0-9]{4})([CGAT]+)', raw_data)
 	strand_list = []
 	for k,v in massaged_data:
-		strand_list.append({"title": k, "strand": v})
+		strand_len = len(v)
+		content = 0
+		for base in v:
+			if base in "CG":
+				content += 1
+		strand_list.append({
+							"title": k, "strand": v, 
+							"length": strand_len, "cg content": content})			
 	return strand_list
 	
 def most_cg_pairs(strands):
@@ -24,8 +31,6 @@ def most_cg_pairs(strands):
 
 strand_dict = build_strand_dicts(raw_data)
 
-for val in strand_dict:
-	print val
-
-# most_cg_pairs(strand_dict)
+for d in strand_dict:
+	print d
 
