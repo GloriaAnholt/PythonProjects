@@ -9,7 +9,7 @@ import re
 
 def create_instructions():
 
-	in_file = open("advent.06.data.py", "r")
+	in_file = open("AdventOfCode.06.data.py", "r")
 	num = re.compile(r'(?P<x1>[0-9]{1,3}),(?P<y1>[0-9]{1,3}).* (?P<x2>[0-9]{1,3}),(?P<y2>[0-9]{1,3})')
 	instructions = []
 	status = 0     # let's try this with 0: off, 1: on, 2: toggle
@@ -77,5 +77,5 @@ def calculate_lights(grid):
 instructions = create_instructions()
 grid = initialize_grid()
 
-print calculate_lights(toggle_lights(instructions, grid))
+print "THERE ARE", calculate_lights(toggle_lights(instructions, grid)), "LIGHTS!!"
 	
