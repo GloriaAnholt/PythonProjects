@@ -71,3 +71,4 @@ def postfix_tests():
 
 
 postfix_tests()
+test_cases()
