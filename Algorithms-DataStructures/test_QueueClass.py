@@ -11,10 +11,10 @@ from QueueClass import Queue
 class QueueTester(unittest.TestCase):
 
     def test_is_empty(self):
-        schwerns_queue = Queue()
-        self.assertTrue(schwerns_queue.is_empty())
-        schwerns_queue.enqueue('dicks')
-        self.assertFalse(schwerns_queue.is_empty())
+        queue = Queue()
+        self.assertTrue(queue.is_empty())
+        queue.enqueue('an item')
+        self.assertFalse(queue.is_empty())
 
     def test_has_items(self):
         queue = Queue()

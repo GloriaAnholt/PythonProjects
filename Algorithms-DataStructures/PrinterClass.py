@@ -1,16 +1,15 @@
-# coding=utf-8
 # Data Structures and Algorithms: Printer Queue Simulation - PrinterClass
 # 02.04.16
 # @totallygloria
 
 
-'''
-The Printer class (Listing 2) will need to track whether it has a current task.
-If it does, then it is busy (lines 13–17) and the amount of time needed can be computed
+"""
+The Printer class will need to track whether it has a current task.
+If it does, then it is busy and the amount of time needed can be computed
 from the number of pages in the task. The constructor will also allow the pages-per-minute
 setting to be initialized. The tick method decrements the internal timer and sets the
-printer to idle (line 11) if the task is completed.
-'''
+printer to idle if the task is completed.
+"""
 
 
 class Printer(object):
@@ -30,4 +29,6 @@ class Printer(object):
             return True
         return False
 
-
+    def startnext(self, newtask):
+        self.currenttask = newtask
+        self.timeremaining = newtask.getpages() * 60 / self.pagerate
