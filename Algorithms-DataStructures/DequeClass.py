@@ -37,22 +37,18 @@ class Deque(object):
     def removefront(self):
         # removes the front item from the deque. It needs no parameters and returns the item.
         # The deque is modified.
-        popped = self.first
-        new_front = self.first.behind
-        new_front.ahead = None
-        self.first = new_front
+        removed = self.first
+        self.first = self.first.behind
         self.size -= 1
-        return popped.item
+        return removed.item
 
     def removerear(self):
         # removes the rear item from the deque. It needs no parameters and returns the item.
         # The deque is modified.
-        popped = self.last
-        new_last = self.last.ahead
-        self.last = new_last
-        self.last.behind = None
+        removed = self.last
+        self.last = self.last.ahead
         self.size -= 1
-        return popped.item
+        return removed.item
 
     def isempty(self):
         # tests to see whether the deque is empty. It needs no parameters and returns a boolean value.

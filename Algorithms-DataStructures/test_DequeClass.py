@@ -43,7 +43,51 @@ class DequeTester(unittest.TestCase):
         self.assertEqual(deque.first.item, 'cow')
         self.assertEqual(deque.last.item, 'elephant')
 
+    def test_removefront(self):
+        deque = Deque()
+        deque.addfront('apples')
+        deque.addfront('bananas')
+        deque.addfront('cherries')
+        self.assertEqual(deque.size, 3)
+        popped = deque.removefront()
+        self.assertEqual(popped, 'cherries')
+        self.assertEqual(deque.size, 2)
+        popped = deque.removefront()
+        self.assertEqual(popped, 'bananas')
+        self.assertEqual(deque.size, 1)
+        popped = deque.removefront()
+        self.assertEqual(popped, 'apples')
+        self.assertEqual(deque.size, 0)
 
+    def test_removerear(self):
+        deque = Deque()
+        deque.addrear('apples')
+        deque.addrear('bananas')
+        deque.addrear('cherries')
+        self.assertEqual(deque.size, 3)
+        popped = deque.removerear()
+        self.assertEqual(popped, 'cherries')
+        self.assertEqual(deque.size, 2)
+        popped = deque.removerear()
+        self.assertEqual(popped, 'bananas')
+        self.assertEqual(deque.size, 1)
+        popped = deque.removerear()
+        self.assertEqual(popped, 'apples')
+        self.assertEqual(deque.size, 0)
+
+    def test_size(self):
+        deque = Deque()
+        dtwo = Deque()
+        for i in range(10):
+            deque.addfront(i)
+            self.assertEqual(deque.size, i+1)
+            dtwo.addrear(i)
+            self.assertEqual(dtwo.size, i+1)
+        for i in range(10):
+            deque.removefront()
+            self.assertEqual(deque.size, 9-i)
+            dtwo.removerear()
+            self.assertEqual(dtwo.size, 9-i)
 
 
 if __name__ == '__main__':
