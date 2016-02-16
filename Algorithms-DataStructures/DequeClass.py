@@ -13,17 +13,25 @@ class Deque(object):
     def addfront(self, item):
         # adds a new item to the front of the deque. It needs the item and returns nothing.
         new_element = Element(item)
-        self.first.ahead = new_element
-        new_element.behind = self.first
-        self.first = new_element
+        if self.size >= 1:
+            self.first.ahead = new_element
+            new_element.behind = self.first
+            self.first = new_element
+        elif self.size == 0:
+            self.first = new_element
+            self.last = new_element
         self.size += 1
 
     def addrear(self, item):
         # adds a new item to the rear of the deque. It needs the item and returns nothing.
         new_element = Element(item)
-        self.last.behind = new_element
-        new_element.ahead = self.last
-        self.last = new_element
+        if self.size >= 1:
+            self.last.behind = new_element
+            new_element.ahead = self.last
+            self.last = new_element
+        elif self.size == 0:
+            self.first = new_element
+            self.last = new_element
         self.size += 1
 
     def removefront(self):
@@ -31,8 +39,8 @@ class Deque(object):
         # The deque is modified.
         popped = self.first
         new_front = self.first.behind
+        new_front.ahead = None
         self.first = new_front
-        self.first.ahead = None
         self.size -= 1
         return popped.item
 
@@ -57,8 +65,8 @@ class Deque(object):
         return self.size
 
 
- class Element(object):
-     def __init__(self, value):
-         self.item = value
-         self.ahead = None
-         self.behind = None
+class Element(object):
+    def __init__(self, value):
+        self.item = value
+        self.ahead = None
+        self.behind = None
