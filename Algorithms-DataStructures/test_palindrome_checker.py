@@ -4,6 +4,8 @@
 
 
 import unittest
+import sys
+from StringIO import StringIO
 
 from DequeClass import Deque
 import palindrome_checker
@@ -25,6 +27,13 @@ class PalindromeTester(unittest.TestCase):
         self.assertEqual(deque.size, 0)
         self.assertEqual(pal.size, 0)
 
+    def test_user_input(self):
+        control = "banana"
+        test_input = StringIO("banana")
+        sys.stdin = test_input
+        sys.stdout = StringIO()
+        testcase = palindrome_checker.user_input()
+        self.assertEqual(testcase, control)
 
 if __name__ == '__main__':
     unittest.main()
