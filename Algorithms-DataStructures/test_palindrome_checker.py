@@ -45,6 +45,10 @@ class PalindromeTester(unittest.TestCase):
         for letter in 'banana':
             dtwo.addrear(letter)
         self.assertFalse(palindrome_checker.pal_checker(dtwo))
+        dthree = Deque()
+        for letter in 'abba':
+            deque.addfront(letter)
+        self.assertTrue(palindrome_checker.pal_checker(dthree))
 
 if __name__ == '__main__':
     unittest.main()

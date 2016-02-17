@@ -13,6 +13,9 @@ def user_input():
     if len(word) <= 2:
         print "A palindrome needs three or more letters."
         user_input()
+    if not word.isalpha():
+        print "A palindrome is a word, it only uses letters."
+        user_input()
     return word
 
 
@@ -46,12 +49,19 @@ def pal_checker(deque):
     return match
 
 
-
 def main():
     # gets input, builds a deque, checks if matches, repeats
     print "This is a palindrome checker."
-    repeat = True
-
-    while repeat:
+    while True:
         word = user_input()
-        build_deque(word)
+        deque = build_deque(word)
+        pal = pal_checker(deque)
+
+        if pal:
+            print "It's a palindrome!"
+        else:
+            print "Nope, not a palindrome."
+
+
+if __name__ == '__main__':
+    main()
