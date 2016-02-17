@@ -15,6 +15,7 @@ def user_input():
         user_input()
     return word
 
+
 def build_deque(word):
     # creates the deque, maintains letter order
     d = Deque()
@@ -23,14 +24,27 @@ def build_deque(word):
 
     return d
 
+
 def pal_checker(deque):
     # pops front and back, returns true or false
-    if deque.size <= 2:
-        return False
-    f = deque.removefront()
-    r = deque.removerear()
-    if f != r:
-        return False
+    match = True
+    if (deque.size % 2) == 0:
+        for i in range(deque.size):
+            f = deque.removefront()
+            r = deque.removerear()
+            if f != r:
+                match = False
+                break
+    else:
+        for i in range(deque.size - 1):
+            f = deque.removefront()
+            r = deque.removerear()
+            if f != r:
+                match = False
+                break
+
+    return match
+
 
 
 def main():

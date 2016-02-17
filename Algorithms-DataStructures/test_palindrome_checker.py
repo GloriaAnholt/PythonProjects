@@ -35,5 +35,16 @@ class PalindromeTester(unittest.TestCase):
         testcase = palindrome_checker.user_input()
         self.assertEqual(testcase, control)
 
+
+    def test_pal_checker(self):
+        deque = Deque()
+        for letter in 'level':
+            deque.addfront(letter)
+        self.assertTrue(palindrome_checker.pal_checker(deque))
+        dtwo = Deque()
+        for letter in 'banana':
+            dtwo.addrear(letter)
+        self.assertFalse(palindrome_checker.pal_checker(dtwo))
+
 if __name__ == '__main__':
     unittest.main()
