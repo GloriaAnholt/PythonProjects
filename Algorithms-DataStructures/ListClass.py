@@ -11,16 +11,16 @@ class List(object):
         self.size = 0
 
     def add(self, item):
-        # adds a new item to the list. It needs the item and returns nothing.
+        # adds a new item to the FRONT of the list. It needs the item and returns nothing.
         # Assume the item is not already in the list.
-        new_item = Element(item)
+        new_item = Node(item)
         if self.size == 0:
             self.first = new_item
             self.last = new_item
         else:
-            new_item.ahead = self.last
-            self.last.behind = new_item
-            self.last = new_item
+            new_item.behind = self.first
+            self.first.ahead = new_item
+            self.first = new_item
         self.size += 1
 
 
@@ -39,12 +39,20 @@ class List(object):
 
     def size(self):
         # returns the number of items in the list. It needs no parameters and returns an integer.
-        pass
+        return self.size
 
     def append(self, item):
         # adds a new item to the end of the list making it the last item in the collection.
         # It needs the item and returns nothing. Assume the item is not already in the list.
-        pass
+        new_item = Node(item)
+        if self.size == 0:
+            self.first = new_item
+            self.last = new_item
+        else:
+            new_item.ahead = self.last
+            self.last.behind = new_item
+            self.last = new_item
+        self.size += 1
 
     def index(self, item):
         # returns the position of item in the list. It needs the item and returns the index.
@@ -68,9 +76,12 @@ class List(object):
         pass
 
 
-class Element(object):
+class Node(object):
 
     def __init__(self, value):
         self.ahead = None
         self.behind = None
         self.item = value
+
+    def get_next(self):
+        return self.behind
