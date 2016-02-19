@@ -16,6 +16,7 @@ class List(object):
         new_item = Element(item)
         if self.size == 0:
             self.first = new_item
+            self.last = new_item
         else:
             new_item.ahead = self.last
             self.last.behind = new_item
