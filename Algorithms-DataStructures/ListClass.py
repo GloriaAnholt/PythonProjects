@@ -93,7 +93,9 @@ class List(object):
 
     def is_empty(self):
         # tests to see whether the list is empty. It needs no parameters and returns a boolean value.
-        pass
+        if self.size == 0 or (self.first == None and self.last == None):
+            return True
+        return False
 
     def size(self):
         # returns the number of items in the list. It needs no parameters and returns an integer.

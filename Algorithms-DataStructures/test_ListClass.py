@@ -110,5 +110,13 @@ class ListClassTester(unittest.TestCase):
         self.assertFalse(l.search(None))
         self.assertFalse(l.search('peach'))
 
+    def test_is_empty(self):
+        l = List()
+        self.assertTrue(l.is_empty())
+        l.add('apple')
+        self.assertFalse(l.is_empty())
+        l.pop()
+        self.assertTrue(l.is_empty())
+
 if __name__ == '__main__':
     unittest.main()
