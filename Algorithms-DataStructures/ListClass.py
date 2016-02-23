@@ -81,10 +81,15 @@ class List(object):
             else:
                 current = current.behind
 
-
     def search(self, item):
         # searches for the item in the list. It needs the item and returns a boolean value.
-        pass
+        current = self.first
+        for i in range(self.size):
+            if current.item == item:
+                return True
+            else:
+                current = current.behind
+        return False
 
     def is_empty(self):
         # tests to see whether the list is empty. It needs no parameters and returns a boolean value.

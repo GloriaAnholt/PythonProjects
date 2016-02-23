@@ -83,7 +83,7 @@ class ListClassTester(unittest.TestCase):
         self.assertEqual(l.size, 2)
         self.assertEqual(l.last.item, 'coconut')
         self.assertEqual(l.first.item, 'banana')
-        
+
         # Case: remove from middle of list
         l.append('elderberry')
         self.assertEqual(l.size, 3)
@@ -94,7 +94,21 @@ class ListClassTester(unittest.TestCase):
         self.assertEqual(l.last.item, 'elderberry')
 
 
-
+    def test_search(self):
+        l = List()
+        l.add('apple')
+        l.append('banana')
+        l.append('coconut')
+        l.append('durian')
+        l.append('elderberry')
+        self.assertEqual(l.size, 5)
+        self.assertTrue(l.search('apple'))
+        self.assertTrue(l.search('banana'))
+        self.assertTrue(l.search('coconut'))
+        self.assertTrue(l.search('durian'))
+        self.assertTrue(l.search('elderberry'))
+        self.assertFalse(l.search(None))
+        self.assertFalse(l.search('peach'))
 
 if __name__ == '__main__':
     unittest.main()
