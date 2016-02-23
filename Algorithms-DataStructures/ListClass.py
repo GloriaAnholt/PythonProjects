@@ -121,7 +121,35 @@ class List(object):
     def grab(self, pos):
         # removes and returns the item at position pos. It needs the position and returns the item.
         # Assume the item is in the list.
-        pass
+        # Special case for first item, doesn't need to loop
+        if pos == 0 and self.size == 1:   # Clear the list if only one node long
+            current = self.first
+            self.last = None
+            self.first = None
+            self.size -= 1
+            return current.item
+        elif pos == 0 and self.size > 1:    # Reset front if longer than one
+            current = self.first
+            new_first = current.behind
+            new_first.ahead = None
+            self.first = new_first
+            self.size -= 1
+            return current.item
+        # Special case for last item, calls pop method
+        elif pos == (self.size - 1):
+            return self.pop()
+        # Otherwise, loop through list until at item, then remove and return item
+        current = self.first
+        for i in range(pos + 1):
+            if i == pos:
+                infront = current.ahead
+                inrear = current.behind
+                infront.behind = inrear
+                inrear.front = infront
+                self.size -= 1
+                return current.item
+            else:
+                current = current.behind
 
 
 class Node(object):

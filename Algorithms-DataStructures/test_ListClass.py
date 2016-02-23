@@ -133,6 +133,34 @@ class ListClassTester(unittest.TestCase):
         self.assertEqual(l.index('elderberry'), 4)
         self.assertEqual(l.index('peach'), None)
 
+    def test_grab(self):
+        # Build a list, check that it is as expected
+        l = List()
+        l.add('apple')
+        l.append('banana')
+        l.append('coconut')
+        self.assertEqual(l.size, 3)
+
+        # Case: grab from front of list
+        self.assertEqual(l.grab(0), 'apple')
+        self.assertEqual(l.size, 2)
+        self.assertEqual(l.first.item, 'banana')
+        self.assertEqual(l.last.item, 'coconut')
+
+        # Case: grab from end of list
+        l.append('durian')
+        self.assertEqual(l.size, 3)
+        self.assertEqual(l.grab(2), 'durian')
+        self.assertEqual(l.first.item, 'banana')
+        self.assertEqual(l.last.item, 'coconut')
+
+        # Case: grab from middle of list
+        l.append('elderberry')
+        self.assertEqual(l.size, 3)
+        self.assertEqual(l.grab(1), 'coconut')
+        self.assertEqual(l.first.item, 'banana')
+        self.assertEqual(l.last.item, 'elderberry')
+
 
 
 if __name__ == '__main__':
