@@ -46,7 +46,7 @@ class List(object):
             self.last = new_last
             self.size -= 1
             return popped.item
-        if self.size == 1:
+        elif self.size == 1:
             popped = self.last
             self.last = None
             self.first = None
@@ -57,7 +57,30 @@ class List(object):
     def remove(self, item):
         # removes the item from the list. It needs the item and modifies the list.
         # Assume the item is present in the list.
-        pass
+        current = self.first
+        for i in range(self.size):
+            if current.item == item and i == 0:
+                inback = current.behind
+                inback.ahead = None
+                self.first = inback
+                self.size -= 1
+                break
+            elif current.item == item and i == (self.size - 1):
+                infront = current.ahead
+                infront.behind = None
+                self.last = infront
+                self.size -= 1
+                break
+            elif current.item == item:
+                infront = current.ahead
+                inback = current.behind
+                infront.behind = inback
+                inback.ahead = infront
+                self.size -= 1
+                break
+            else:
+                current = current.behind
+
 
     def search(self, item):
         # searches for the item in the list. It needs the item and returns a boolean value.

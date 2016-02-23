@@ -61,6 +61,39 @@ class ListClassTester(unittest.TestCase):
         self.assertEqual(l.size, 0)
         self.assertEqual(l.pop(), None)
 
+    def test_remove(self):
+        # Build a list, check that it is as expected
+        l = List()
+        l.add('apple')
+        l.append('banana')
+        l.append('coconut')
+        self.assertEqual(l.size, 3)
+
+        # Case: remove from front of list
+        self.assertEqual(l.first.item, 'apple')
+        l.remove('apple')
+        self.assertEqual(l.first.item, 'banana')
+        self.assertEqual(l.size, 2)
+
+        # Case: remove from end of list
+        l.append('durian')
+        self.assertEqual(l.size, 3)
+        self.assertEqual(l.last.item, 'durian')
+        l.remove('durian')
+        self.assertEqual(l.size, 2)
+        self.assertEqual(l.last.item, 'coconut')
+        self.assertEqual(l.first.item, 'banana')
+        
+        # Case: remove from middle of list
+        l.append('elderberry')
+        self.assertEqual(l.size, 3)
+        self.assertEqual(l.last.item, 'elderberry')
+        l.remove('coconut')
+        self.assertEqual(l.size, 2)
+        self.assertEqual(l.first.item, 'banana')
+        self.assertEqual(l.last.item, 'elderberry')
+
+
 
 
 if __name__ == '__main__':
