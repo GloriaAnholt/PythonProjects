@@ -118,5 +118,22 @@ class ListClassTester(unittest.TestCase):
         l.pop()
         self.assertTrue(l.is_empty())
 
+    def test_index(self):
+        l = List()
+        self.assertEqual(l.index('peach'), None)
+        l.add('apple')
+        l.append('banana')
+        l.append('coconut')
+        l.append('durian')
+        l.append('elderberry')
+        self.assertEqual(l.index('apple'), 0)
+        self.assertEqual(l.index('banana'), 1)
+        self.assertEqual(l.index('coconut'), 2)
+        self.assertEqual(l.index('durian'), 3)
+        self.assertEqual(l.index('elderberry'), 4)
+        self.assertEqual(l.index('peach'), None)
+
+
+
 if __name__ == '__main__':
     unittest.main()

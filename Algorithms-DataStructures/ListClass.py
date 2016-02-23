@@ -104,7 +104,13 @@ class List(object):
     def index(self, item):
         # returns the position of item in the list. It needs the item and returns the index.
         # Assume the item is in the list.
-        pass
+        current = self.first
+        for i in range(self.size):
+            if current.item == item:
+                return i
+            else:
+                current = current.behind
+        return None
 
     def insert(self, pos, item):
         # adds a new item to the list at position pos. It needs the item and returns nothing.
