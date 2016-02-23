@@ -116,7 +116,23 @@ class List(object):
         # adds a new item to the list at position pos. It needs the item and returns nothing.
         # Assume the item is not already in the list and there are enough existing items
         # to have position pos.
-        pass
+        if pos == 0 or self.size == 0:  # Case for front / empty list, adds
+            self.add(item)
+        elif pos >= self.size:   # Case for position longer than the list, appends
+            self.append(item)
+        else:
+            new_item = Node(item)
+            current = self.first
+            for i in range(pos + 1):
+                if i == pos:
+                    infront = current.ahead
+                    new_item.behind = current
+                    new_item.ahead = infront
+                    infront.behind = new_item
+                    current.ahead = new_item
+                    self.size += 1
+                else:
+                    current = current.behind
 
     def grab(self, pos):
         # removes and returns the item at position pos. It needs the position and returns the item.

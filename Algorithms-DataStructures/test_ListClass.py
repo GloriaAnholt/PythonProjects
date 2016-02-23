@@ -93,7 +93,6 @@ class ListClassTester(unittest.TestCase):
         self.assertEqual(l.first.item, 'banana')
         self.assertEqual(l.last.item, 'elderberry')
 
-
     def test_search(self):
         l = List()
         l.add('apple')
@@ -161,6 +160,44 @@ class ListClassTester(unittest.TestCase):
         self.assertEqual(l.first.item, 'banana')
         self.assertEqual(l.last.item, 'elderberry')
 
+    def test_insert(self):
+        l = List()
+        # Case: insert into empty list
+        l.insert(0, 'apricot')
+        self.assertEqual(l.first.item, 'apricot')
+        self.assertEqual(l.last.item, 'apricot')
+        self.assertEqual(l.size, 1)
+
+        # Case: insert at a pos longer than the list
+        l.insert(100, 'wintergreen')
+        self.assertEqual(l.first.item, 'apricot')
+        self.assertEqual(l.last.item, 'wintergreen')
+        self.assertEqual(l.size, 2)
+
+        # Case: insert into front of list
+        l.insert(0, 'apple')
+        self.assertEqual(l.first.item, 'apple')
+        self.assertEqual(l.size, 3)
+
+        # Case: insert into middle of list
+        l.insert(2, 'banana')
+        self.assertEqual(l.size, 4)
+        self.assertEqual(l.first.item, 'apple')
+        self.assertEqual(l.last.item, 'wintergreen')
+        self.assertTrue(l.search('banana'))
+
+        # Checking that order is as expected
+        self.assertEqual(l.pop(), 'wintergreen')
+        self.assertEqual(l.pop(), 'banana')
+        self.assertEqual(l.pop(), 'apricot')
+        self.assertEqual(l.pop(), 'apple')
+        self.assertEqual(l.pop(), None)
+
+        # Case, inserting at a weird index into empty list
+        l.insert(42, 'apricot')
+        self.assertEqual(l.first.item, 'apricot')
+        self.assertEqual(l.last.item, 'apricot')
+        self.assertEqual(l.size, 1)
 
 
 if __name__ == '__main__':
