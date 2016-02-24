@@ -32,6 +32,21 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.size, 3)
         self.assertEqual(l.first.item, 4)
         self.assertEqual(l.last.item, 7)
+
+        o = OrderedList()
+        o.add('banana')
+        self.assertEqual(o.size, 1)
+        self.assertEqual(o.first.item, 'banana')
+        self.assertEqual(o.last.item, 'banana')
+        o.add('apple')
+        self.assertEqual(o.size, 2)
+        self.assertEqual(o.first.item, 'apple')
+        self.assertEqual(o.last.item, 'banana')
+        o.add('coconut')
+        self.assertEqual(o.size, 3)
+        self.assertEqual(o.first.item, 'apple')
+        self.assertEqual(o.last.item, 'coconut')
+
 '''
     def test_pop(self):
         l = OrderedList()

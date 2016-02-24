@@ -10,26 +10,34 @@ class OrderedList(object):
         self.last = None
         self.size = 0
 
-    def add(self, item):
+    def add(self, value):
         # adds a new item to the list making sure that the order is preserved. It needs the item
         # and returns nothing. Assume the item is not already in the list.
-        new_node = Node(item)
-        if self.size == 0:
+        new_node = Node(value)
+        if self.size == 0:                  # If the list is empty, set it to the new node
             self.first = new_node
+            self.last = new_node
+        elif new_node.item <= self.first.item: # If the new node is the smallest, put it at the head
+            new_node.behind = self.first
+            self.first.ahead = new_node
+            self.first = new_node
+        elif new_node.item >= self.last.item: # If the new node is the largest, put it at the tail
+            new_node.ahead = self.last
             self.last = new_node
         else:
             current = self.first
-            for i in range(self.size + 1):
+            for i in range(self.size):
                 if new_node.item < current.item:
                     current = current.ahead
                 elif new_node.item >= current.item:
-                    ahead = current.ahead
-                    new_node.behind = current
-                    new_node.ahead = ahead
-                    ahead.behind = new_node
-                    current.ahead = new_node
+                    behind = current.behind
+                    behind.ahead = new_node
+                    new_node.behind = behind
+                    new_node.ahead = current
+                    current.behind = new_node
+                    break
         self.size += 1
-
+'''
     def remove(self, item):
         # removes the item from the list. It needs the item and modifies the list.
         # Assume the item is present in the list.
@@ -138,6 +146,7 @@ class OrderedList(object):
                 return current.item
             else:
                 current = current.behind
+'''
 
 
 class Node(object):
