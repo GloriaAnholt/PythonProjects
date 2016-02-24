@@ -37,34 +37,33 @@ class OrderedList(object):
                     current.behind = new_node
                     break
         self.size += 1
-'''
+
     def remove(self, item):
         # removes the item from the list. It needs the item and modifies the list.
         # Assume the item is present in the list.
-        current = self.first
-        for i in range(self.size):
-            if current.item == item and i == 0:
-                inback = current.behind
-                inback.ahead = None
-                self.first = inback
-                self.size -= 1
-                break
-            elif current.item == item and i == (self.size - 1):
-                infront = current.ahead
-                infront.behind = None
-                self.last = infront
-                self.size -= 1
-                break
-            elif current.item == item:
-                infront = current.ahead
-                inback = current.behind
-                infront.behind = inback
-                inback.ahead = infront
-                self.size -= 1
-                break
-            else:
-                current = current.behind
-
+        if self.first.item == item:         # If the item is first, remove it and move head
+            current = self.first
+            current.ahead = None
+            self.first = current.behind
+            self.size -= 1
+        elif self.last.item == item:        # If the item is last, remove and move tail
+            current = self.last
+            current.behind = None
+            self.last = current.ahead
+            self.size -= 1
+        else:
+            current = self.first
+            for i in range(self.size):
+                if current.item == item:
+                    infront = current.ahead
+                    inback = current.behind
+                    infront.behind = inback
+                    inback.ahead = infront
+                    self.size -= 1
+                    break
+                else:
+                    current = current.behind
+'''
     def search(self, item):
         # searches for the item in the list. It needs the item and returns a boolean value.
         current = self.first
