@@ -49,7 +49,13 @@ class OrderedList(object):
     def remove(self, item):
         # removes the item from the list. It needs the item and modifies the list.
         # Assume the item is present in the list.
-        if self.first.item == item:         # If the item is first, remove it and move head
+        if self.size == 0:          # if there's nothing in the list, don't do anything
+            return 
+        elif self.size == 1:        # if there's one item, and it's the right one, delete head/tail
+            if self.first.item == item:
+                self.first = None
+                self.last = None
+        elif self.first.item == item:         # If the item is first, remove it and move head
             self.first = self.first.behind
             self.first.ahead = None
         elif self.last.item == item:        # If the item is last, remove and move tail
@@ -67,7 +73,7 @@ class OrderedList(object):
                 else:
                     current = current.behind
         self.size -= 1
-'''
+
     def search(self, item):
         # searches for the item in the list. It needs the item and returns a boolean value.
         current = self.first
@@ -83,7 +89,7 @@ class OrderedList(object):
         if self.size == 0 or (self.first == None and self.last == None):
             return True
         return False
-
+'''
     def size(self):
         # returns the number of items in the list. It needs no parameters and returns an integer.
         return self.size
