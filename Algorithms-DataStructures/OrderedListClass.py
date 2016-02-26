@@ -14,27 +14,35 @@ class OrderedList(object):
         # adds a new item to the list making sure that the order is preserved. It needs the item
         # and returns nothing. Assume the item is not already in the list.
         new_node = Node(value)
-        if self.size == 0:                  # If the list is empty, set it to the new node
+        # If the list is empty, both head and tail are the new node
+        if self.size == 0:
             self.first = new_node
             self.last = new_node
-        elif new_node.item <= self.first.item: # If the new node is the smallest, put it at the head
+        # If the new node is the smallest, put it at the head. If the list is one long, also move the tail
+        elif new_node.item <= self.first.item:
+            old_first = self.first
             new_node.behind = self.first
             self.first.ahead = new_node
             self.first = new_node
-        elif new_node.item >= self.last.item: # If the new node is the largest, put it at the tail
+            if self.size == 1:
+                self.last = old_first
+        # If the new node is the largest, put it at the tail
+        elif new_node.item >= self.last.item:
             new_node.ahead = self.last
+            self.last.behind = new_node
             self.last = new_node
+        # If you get here, the node goes in the middle of the list
         else:
             current = self.first
             for i in range(self.size):
-                if new_node.item < current.item:
-                    current = current.ahead
-                elif new_node.item >= current.item:
-                    behind = current.behind
-                    behind.ahead = new_node
-                    new_node.behind = behind
-                    new_node.ahead = current
-                    current.behind = new_node
+                if new_node.item > current.item:
+                    current = current.behind
+                elif new_node.item <= current.item:
+                    infront = current.ahead
+                    infront.behind = new_node
+                    new_node.ahead = infront
+                    new_node.behind = current
+                    current.ahead = new_node
                     break
         self.size += 1
 

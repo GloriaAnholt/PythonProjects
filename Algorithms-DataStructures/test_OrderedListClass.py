@@ -20,18 +20,35 @@ class OrderedListClassTester(unittest.TestCase):
 
     def test_add(self):
         l = OrderedList()
-        l.add(7)
+        l.add(7) # add to an empty list
         self.assertEqual(l.size, 1)
         self.assertEqual(l.first.item, 7)
         self.assertEqual(l.last.item, 7)
-        l.add(4)
+        l.add(4) # add to front of list
         self.assertEqual(l.size, 2)
         self.assertEqual(l.first.item, 4)
         self.assertEqual(l.last.item, 7)
-        l.add(5)
+        l.add(3) # add to front of list
         self.assertEqual(l.size, 3)
-        self.assertEqual(l.first.item, 4)
-        self.assertEqual(l.last.item, 7)
+        self.assertEqual(l.first.item, 3)
+        l.add(8) # add to end of list
+        self.assertEqual(l.size, 4)
+        self.assertEqual(l.last.item, 8)
+        l.add(9) # add to end of list
+        self.assertEqual(l.size, 5)
+        self.assertEqual(l.last.item, 9)
+        l.add(5) # add to middle of list
+        self.assertEqual(l.size, 6)
+        a = l.first
+        for i in range(2):  # walk through the list until the num we added
+            a = a.behind
+        self.assertEqual(a.item, 5)  # confirm that it is what was added
+        l.add(6) # add to middle of list
+        self.assertEqual(l.size, 7)
+        b = l.first
+        for i in range(3):  # walk through the list until the num we added
+            b = b.behind
+        self.assertEqual(b.item, 6)
 
         o = OrderedList()
         o.add('banana')
@@ -47,6 +64,8 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(o.first.item, 'apple')
         self.assertEqual(o.last.item, 'coconut')
 
+
+'''
     def test_remove(self):
         # Build a list, check that it is as expected
         l = OrderedList()
@@ -62,7 +81,7 @@ class OrderedListClassTester(unittest.TestCase):
         l.remove('apple')
         self.assertEqual(l.first.item, 'banana')
         self.assertEqual(l.size, 2)
-'''
+
         # Case: remove from end of list
         l.add('durian')
         self.assertEqual(l.size, 3)
