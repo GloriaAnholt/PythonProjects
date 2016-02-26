@@ -163,8 +163,6 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.size, 0)
         self.assertEqual(l.pop(), None)
 
-
-'''
     def test_grab(self):
         # Build a list, check that it is as expected
         l = OrderedList()
@@ -193,6 +191,7 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.first.item, 'banana')
         self.assertEqual(l.last.item, 'elderberry')
 
+'''
     def test_insert(self):
         l = OrderedList()
         # Case: insert into empty list

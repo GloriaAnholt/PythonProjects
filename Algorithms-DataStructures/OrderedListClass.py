@@ -122,41 +122,33 @@ class OrderedList(object):
         return popped.item
 
 
-'''
     def grab(self, pos):
         # removes and returns the item at position pos. It needs the position and returns the item.
         # Assume the item is in the list.
         # Special case for first item, doesn't need to loop
-        if pos == 0 and self.size == 1:   # Clear the list if only one node long
-            current = self.first
+        # Special case for last item, calls pop method
+        if pos == (self.size - 1):
+            return self.pop()
+
+        current = self.first
+        if pos == 0 and self.size == 1:  # Clear the list if it's only one node long
             self.last = None
             self.first = None
-            self.size -= 1
-            return current.item
-        elif pos == 0 and self.size > 1:    # Reset front if longer than one
-            current = self.first
+        elif pos == 0 and self.size > 1: # Move head back if list is longer than one
             new_first = current.behind
             new_first.ahead = None
             self.first = new_first
-            self.size -= 1
-            return current.item
-        # Special case for last item, calls pop method
-        elif pos == (self.size - 1):
-            return self.pop()
-        # Otherwise, loop through list until at item, then remove and return item
-        current = self.first
-        for i in range(pos + 1):
-            if i == pos:
-                infront = current.ahead
-                inrear = current.behind
-                infront.behind = inrear
-                inrear.front = infront
-                self.size -= 1
-                return current.item
-            else:
-                current = current.behind
-'''
-
+        else:                            # loop through list until at item, remove and return item
+            for i in range(pos + 1):
+                if i == pos:
+                    infront = current.ahead
+                    inrear = current.behind
+                    infront.behind = inrear
+                    inrear.front = infront
+                else:
+                    current = current.behind
+        self.size -= 1
+        return current.item
 
 class Node(object):
 
