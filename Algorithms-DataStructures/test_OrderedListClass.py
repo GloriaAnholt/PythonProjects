@@ -65,7 +65,6 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(o.last.item, 'coconut')
 
 
-'''
     def test_remove(self):
         # Build a list, check that it is as expected
         l = OrderedList()
@@ -99,7 +98,8 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.size, 2)
         self.assertEqual(l.first.item, 'banana')
         self.assertEqual(l.last.item, 'elderberry')
-'''
+
+
 '''
     def test_pop(self):
         l = OrderedList()
@@ -118,10 +118,10 @@ class OrderedListClassTester(unittest.TestCase):
     def test_search(self):
         l = OrderedList()
         l.add('apple')
-        l.append('banana')
-        l.append('coconut')
-        l.append('durian')
-        l.append('elderberry')
+        l.add('banana')
+        l.add('coconut')
+        l.add('durian')
+        l.add('elderberry')
         self.assertEqual(l.size, 5)
         self.assertTrue(l.search('apple'))
         self.assertTrue(l.search('banana'))
@@ -143,10 +143,10 @@ class OrderedListClassTester(unittest.TestCase):
         l = OrderedList()
         self.assertEqual(l.index('peach'), None)
         l.add('apple')
-        l.append('banana')
-        l.append('coconut')
-        l.append('durian')
-        l.append('elderberry')
+        l.add('banana')
+        l.add('coconut')
+        l.add('durian')
+        l.add('elderberry')
         self.assertEqual(l.index('apple'), 0)
         self.assertEqual(l.index('banana'), 1)
         self.assertEqual(l.index('coconut'), 2)
@@ -158,8 +158,8 @@ class OrderedListClassTester(unittest.TestCase):
         # Build a list, check that it is as expected
         l = OrderedList()
         l.add('apple')
-        l.append('banana')
-        l.append('coconut')
+        l.add('banana')
+        l.add('coconut')
         self.assertEqual(l.size, 3)
 
         # Case: grab from front of list
@@ -169,14 +169,14 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.last.item, 'coconut')
 
         # Case: grab from end of list
-        l.append('durian')
+        l.add('durian')
         self.assertEqual(l.size, 3)
         self.assertEqual(l.grab(2), 'durian')
         self.assertEqual(l.first.item, 'banana')
         self.assertEqual(l.last.item, 'coconut')
 
         # Case: grab from middle of list
-        l.append('elderberry')
+        l.add('elderberry')
         self.assertEqual(l.size, 3)
         self.assertEqual(l.grab(1), 'coconut')
         self.assertEqual(l.first.item, 'banana')
