@@ -64,7 +64,6 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(o.first.item, 'apple')
         self.assertEqual(o.last.item, 'coconut')
 
-
     def test_remove(self):
         # Build a list, check that it is as expected
         l = OrderedList()
@@ -111,7 +110,6 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.first, None)
         self.assertEqual(l.last, None)
 
-
     def test_search(self):
         l = OrderedList()
         l.add('apple')
@@ -135,21 +133,6 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertFalse(l.is_empty())
         l.remove('apple')
         self.assertTrue(l.is_empty())
-'''
-    def test_pop(self):
-        l = OrderedList()
-        l.add('apple')
-        l.add('banana')
-        l.add('coconut')
-        self.assertEqual(l.size, 3)
-        self.assertEqual(l.pop(), 'apple')
-        self.assertEqual(l.size, 2)
-        self.assertEqual(l.pop(), 'banana')
-        self.assertEqual(l.size, 1)
-        self.assertEqual(l.pop(), 'coconut')
-        self.assertEqual(l.size, 0)
-        self.assertEqual(l.pop(), None)
-
 
     def test_index(self):
         l = OrderedList()
@@ -166,6 +149,22 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.index('elderberry'), 4)
         self.assertEqual(l.index('peach'), None)
 
+    def test_pop(self):
+        l = OrderedList()
+        l.add('apple')
+        l.add('banana')
+        l.add('coconut')
+        self.assertEqual(l.size, 3)
+        self.assertEqual(l.pop(), 'coconut')
+        self.assertEqual(l.size, 2)
+        self.assertEqual(l.pop(), 'banana')
+        self.assertEqual(l.size, 1)
+        self.assertEqual(l.pop(), 'apple')
+        self.assertEqual(l.size, 0)
+        self.assertEqual(l.pop(), None)
+
+
+'''
     def test_grab(self):
         # Build a list, check that it is as expected
         l = OrderedList()

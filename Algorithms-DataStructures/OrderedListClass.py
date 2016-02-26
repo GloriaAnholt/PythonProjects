@@ -50,7 +50,7 @@ class OrderedList(object):
         # removes the item from the list. It needs the item and modifies the list.
         # Assume the item is present in the list.
         if self.size == 0:          # if there's nothing in the list, don't do anything
-            return 
+            return
         elif self.size == 1:        # if there's one item, and it's the right one, delete head/tail
             if self.first.item == item:
                 self.first = None
@@ -86,10 +86,10 @@ class OrderedList(object):
 
     def is_empty(self):
         # tests to see whether the list is empty. It needs no parameters and returns a boolean value.
-        if self.size == 0 or (self.first == None and self.last == None):
+        if self.size == 0 or (self.first is None and self.last is None):
             return True
         return False
-'''
+
     def size(self):
         # returns the number of items in the list. It needs no parameters and returns an integer.
         return self.size
@@ -108,21 +108,21 @@ class OrderedList(object):
     def pop(self):
         # removes and returns the last item in the list. It needs nothing and returns an item.
         # Assume the list has at least one item.
-        if self.size > 1:
-            popped = self.last
+        popped = self.last
+        if self.size <= 0:
+            return None
+        elif self.size == 1:
+            self.last = None
+            self.first = None
+        elif self.size > 1:
             new_last = popped.ahead
             new_last.behind = None
             self.last = new_last
-            self.size -= 1
-            return popped.item
-        elif self.size == 1:
-            popped = self.last
-            self.last = None
-            self.first = None
-            self.size -= 1
-            return popped.item
-        return None
+        self.size -= 1
+        return popped.item
 
+
+'''
     def grab(self, pos):
         # removes and returns the item at position pos. It needs the position and returns the item.
         # Assume the item is in the list.
