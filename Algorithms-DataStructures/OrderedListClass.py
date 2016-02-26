@@ -121,7 +121,6 @@ class OrderedList(object):
         self.size -= 1
         return popped.item
 
-
     def grab(self, pos):
         # removes and returns the item at position pos. It needs the position and returns the item.
         # Assume the item is in the list.
@@ -131,14 +130,14 @@ class OrderedList(object):
             return self.pop()
 
         current = self.first
-        if pos == 0 and self.size == 1:  # Clear the list if it's only one node long
+        if pos == 0 and self.size == 1:   # Clear the list if it's only one node long
             self.last = None
             self.first = None
-        elif pos == 0 and self.size > 1: # Move head back if list is longer than one
+        elif pos == 0 and self.size > 1:  # Move head back if list is longer than one
             new_first = current.behind
             new_first.ahead = None
             self.first = new_first
-        else:                            # loop through list until at item, remove and return item
+        else:                             # loop through list until at item, remove and return item
             for i in range(pos + 1):
                 if i == pos:
                     infront = current.ahead
@@ -150,6 +149,7 @@ class OrderedList(object):
         self.size -= 1
         return current.item
 
+
 class Node(object):
 
     def __init__(self, value):
@@ -159,3 +159,4 @@ class Node(object):
 
     def get_next(self):
         return self.behind
+

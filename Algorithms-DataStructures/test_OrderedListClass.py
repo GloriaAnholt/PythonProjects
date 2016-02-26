@@ -20,30 +20,30 @@ class OrderedListClassTester(unittest.TestCase):
 
     def test_add(self):
         l = OrderedList()
-        l.add(7) # add to an empty list
+        l.add(7)  # add to an empty list
         self.assertEqual(l.size, 1)
         self.assertEqual(l.first.item, 7)
         self.assertEqual(l.last.item, 7)
-        l.add(4) # add to front of list
+        l.add(4)  # add to front of list
         self.assertEqual(l.size, 2)
         self.assertEqual(l.first.item, 4)
         self.assertEqual(l.last.item, 7)
-        l.add(3) # add to front of list
+        l.add(3)  # add to front of list
         self.assertEqual(l.size, 3)
         self.assertEqual(l.first.item, 3)
-        l.add(8) # add to end of list
+        l.add(8)  # add to end of list
         self.assertEqual(l.size, 4)
         self.assertEqual(l.last.item, 8)
-        l.add(9) # add to end of list
+        l.add(9)  # add to end of list
         self.assertEqual(l.size, 5)
         self.assertEqual(l.last.item, 9)
-        l.add(5) # add to middle of list
+        l.add(5)  # add to middle of list
         self.assertEqual(l.size, 6)
         a = l.first
         for i in range(2):  # walk through the list until the num we added
             a = a.behind
         self.assertEqual(a.item, 5)  # confirm that it is what was added
-        l.add(6) # add to middle of list
+        l.add(6)  # add to middle of list
         self.assertEqual(l.size, 7)
         b = l.first
         for i in range(3):  # walk through the list until the num we added
@@ -191,46 +191,6 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.first.item, 'banana')
         self.assertEqual(l.last.item, 'elderberry')
 
-'''
-    def test_insert(self):
-        l = OrderedList()
-        # Case: insert into empty list
-        l.insert(0, 'apricot')
-        self.assertEqual(l.first.item, 'apricot')
-        self.assertEqual(l.last.item, 'apricot')
-        self.assertEqual(l.size, 1)
-
-        # Case: insert at a pos longer than the list
-        l.insert(100, 'wintergreen')
-        self.assertEqual(l.first.item, 'apricot')
-        self.assertEqual(l.last.item, 'wintergreen')
-        self.assertEqual(l.size, 2)
-
-        # Case: insert into front of list
-        l.insert(0, 'apple')
-        self.assertEqual(l.first.item, 'apple')
-        self.assertEqual(l.size, 3)
-
-        # Case: insert into middle of list
-        l.insert(2, 'banana')
-        self.assertEqual(l.size, 4)
-        self.assertEqual(l.first.item, 'apple')
-        self.assertEqual(l.last.item, 'wintergreen')
-        self.assertTrue(l.search('banana'))
-
-        # Checking that order is as expected
-        self.assertEqual(l.pop(), 'wintergreen')
-        self.assertEqual(l.pop(), 'banana')
-        self.assertEqual(l.pop(), 'apricot')
-        self.assertEqual(l.pop(), 'apple')
-        self.assertEqual(l.pop(), None)
-
-        # Case, inserting at a weird index into empty list
-        l.insert(42, 'apricot')
-        self.assertEqual(l.first.item, 'apricot')
-        self.assertEqual(l.last.item, 'apricot')
-        self.assertEqual(l.size, 1)
-'''
 
 if __name__ == '__main__':
     unittest.main()
