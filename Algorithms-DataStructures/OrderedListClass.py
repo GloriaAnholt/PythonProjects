@@ -80,6 +80,8 @@ class OrderedList(object):
         for i in range(self.size):
             if current.item == item:
                 return True
+            elif current.item > item:
+                break
             else:
                 current = current.behind
         return False
@@ -139,7 +141,7 @@ class OrderedList(object):
             self.first = new_first
         else:                             # loop through list until at item, remove and return item
             for i in range(pos + 1):
-                if i == pos:
+                if i == pos and self.size > 1:
                     infront = current.ahead
                     inrear = current.behind
                     infront.behind = inrear
