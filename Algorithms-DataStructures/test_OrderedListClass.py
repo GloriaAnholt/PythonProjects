@@ -194,16 +194,40 @@ class OrderedListClassTester(unittest.TestCase):
     def test_list_contents(self):
         # Create a Python list, populate it, create my own list with the same
         # loop to make sure the content is identical
-        pylist = []
+        pylistup = []
         mylist = OrderedList()
         for i in range(10):
-            pylist.append(i * 3)
+            pylistup.append(i * 3)
+            mylist.add(i * 3)
+        self.assertEqual(len(pylistup), mylist.size)
+        for i in range(mylist.size):
+            self.assertEqual(mylist.grab(0), pylistup[i])
+
+        # Add declining numbers to end of list to ensure that the OrderedList is sorting
+        # grab from the front each time
+        pylistdown = []
+        twolist = OrderedList()
+        for i in range(10,0,-1):
+            pylistdown.insert(0, i * 3)
+            twolist.add(i * 3)
+
+        self.assertEqual(len(pylistdown), twolist.size)
+        for i in range(mylist.size, -1):
+            self.assertEqual(mylist.grab(0), pylistdown[i])
+
+        # Add in declining order, grab from end
+        pylistback = []
+        threelist = OrderedList()
+        for i in range(10,0,-1):
+            pylistback.insert(0, i * 3)
             mylist.add(i * 3)
 
-        self.assertEqual(len(pylist), mylist.size)
+        self.assertEqual(len(pylistback), mylist.size)
 
-        for i in range(mylist.size):
-            self.assertEqual(mylist.grab(0), pylist[i])
+        for i in range(len(pylistback), -1):
+            self.assertEqual(mylist.grab(mylist.size -1), pylistback[i])
+            #self.assertEqual(mylist.pop(), pylistback[i])      # should be the same thing, is.
+
 
 if __name__ == '__main__':
     unittest.main()
