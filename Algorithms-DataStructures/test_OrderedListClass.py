@@ -191,6 +191,19 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.first.item, 'banana')
         self.assertEqual(l.last.item, 'elderberry')
 
+    def test_list_contents(self):
+        # Create a Python list, populate it, create my own list with the same
+        # loop to make sure the content is identical
+        pylist = []
+        mylist = OrderedList()
+        for i in range(10):
+            pylist.append(i * 3)
+            mylist.add(i * 3)
+
+        self.assertEqual(len(pylist), mylist.size)
+
+        for i in range(mylist.size):
+            self.assertEqual(mylist.grab(0), pylist[i])
 
 if __name__ == '__main__':
     unittest.main()
