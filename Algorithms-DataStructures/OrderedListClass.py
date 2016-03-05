@@ -128,7 +128,9 @@ class OrderedList(object):
         # Assume the item is in the list.
         # Special case for first item, doesn't need to loop
         # Special case for last item, calls pop method
-        if pos == (self.size - 1):
+        if pos >= self.size or pos <= -2:
+            return None
+        elif pos == self.size - 1 or pos == -1:
             return self.pop()
 
         current = self.first

@@ -191,6 +191,11 @@ class OrderedListClassTester(unittest.TestCase):
         self.assertEqual(l.first.item, 'banana')
         self.assertEqual(l.last.item, 'elderberry')
 
+        # Case: grab from outside the list
+        self.assertEqual(l.grab(6), None)
+        self.assertEqual(l.grab(-14), None)
+        self.assertEqual(l.grab(-1), 'elderberry')
+
     def test_list_contents(self):
         # Create a Python list, populate it, create my own list with the same
         # loop to make sure the content is identical
