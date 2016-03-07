@@ -25,12 +25,13 @@ class PalindromeTester(unittest.TestCase):
         self.assertTrue(palindrome_checker('madamimadam'))
         self.assertTrue(palindrome_checker("madam, i'm adam"))
 
-        self.assertFalse(palindrome_checker('ab'))
-        self.assertFalse(palindrome_checker('abc'))
-        self.assertFalse(palindrome_checker('aabb'))
-        self.assertFalse(palindrome_checker('aabbc'))
-        self.assertFalse(palindrome_checker('aabbcc'))
-        self.assertFalse(palindrome_checker('aabb##@%!!#$%$##'))
+        self.assertEqual(palindrome_checker('ab'), False)
+        self.assertEqual(palindrome_checker('abc'), False)
+        self.assertEqual(palindrome_checker('aabb'), False)
+        self.assertEqual(palindrome_checker('aabbc'), False)
+        self.assertEqual(palindrome_checker('aabbcc'), False)
+        self.assertEqual(palindrome_checker('aabb##@%!!#$%$##'), False)
+        self.assertEqual(palindrome_checker('hello'), False)
 
 if __name__ == '__main__':
     unittest.main()
