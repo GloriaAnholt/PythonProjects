@@ -10,12 +10,12 @@ def fizzbuzz_generator(desired_len):
     fb_list = []
 
     for num in range(1, desired_len+1):
-        if num % 3 == 0:
+        if num % 15 == 0:
+            fb_list.append('FizzBuzz')
+        elif num % 3 == 0:
             fb_list.append('Fizz')
         elif num % 5 == 0:
             fb_list.append('Buzz')
-        elif num % 15 == 0:
-            fb_list.append('FizzBuzz')
         else:
             fb_list.append(num)
 
