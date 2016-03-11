@@ -26,8 +26,8 @@ else:
 def base_converter():
     stack = Stack()
     digits = '0123456789ABCDEF'
-    num = int(raw_input('Enter a number to convert: '))
-    base = int(raw_input('Enter a base to convert to: '))
+    num = int(raw_input('Enter a number in base-10 to convert: '))
+    base = int(raw_input('Enter a base to convert it to: '))
     new_num = ''
 
     while num > 0:
@@ -36,6 +36,6 @@ def base_converter():
 
     while stack.contains_items():
         new_num += str(digits[stack.pop()])
-    return new_num
+    print new_num
 
 base_converter()
