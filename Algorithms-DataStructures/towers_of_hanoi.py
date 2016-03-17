@@ -49,6 +49,27 @@ def game_setup(num_disks, start_loc):
             print "|", "\t\t", "|", "\t\t", start_peg[i]
 
 
+
+def move_disk(current_loc, dest_loc):
+    """ The idea is that this would pop a disk off it's current location
+    and then append it to the correct list.
+    """
+    current_disk = current_loc.pop()
+    print "moving %s from %s to %s" % (current_disk, current_loc, dest_loc)
+    dest_loc.append(current_disk)
+
+
+def hanoi_solver(num_disks, start_loc, dest_loc):
+    """ If the number of disks is one, just move it to the destination.
+    Else, move the (n-1) stack to the helper, move the disk to the dest, move
+    the stack to the dest-peg. The first and third calls are recursive, the middle
+    is simply a call to the move function.
+    """
+
+    if num_disks == 1:
+        move_disk(start_loc, dest_loc)
+
+
 def main():
 
     num_disks, start_loc, dest_loc, helper = user_input()
