@@ -4,120 +4,75 @@ Data Visualization Project
 Parse data from an ugly CSV or Excel file, and render it in
 JSON-like form, visualize in graphs, and plot on Google Maps.
 
-Part II: Take the data we just parsed and visualize it using popular
-Python math libraries.
+visualize JSON-like data using popular Python math libraries.
+
+Copyright (c) 2013 E. Lynn Root
+Distributed under the zlib png license. See LICENSE for details.
+
+Changes copyright (c) 2016 Gloria Guy
 """
 
 from collections import Counter
-
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
+import parse as p
 
 
 MY_FILE = "../data/sample_sfpd_incident_all.csv"
 
 
-def parse(raw_file, delimiter):
-    """Parses a raw CSV file to a JSON-like object"""
-
-    # Open CSV file, and safely close it when we're done
-    opened_file = open(raw_file)
-
-    # Read the CSV data
-    csv_data = csv.reader(opened_file, delimiter=delimiter)
-
-    # Setup an empty list
-    parsed_data = []
-
-    # Skip over the first line of the file for the headers
-    fields = csv_data.next()
-
-    # Iterate over each row of the csv file, zip together field -> value
-    for row in csv_data:
-        parsed_data.append(dict(zip(fields, row)))
-
-    # Close the CSV file
-    opened_file.close()
-
-    return parsed_data
-
-
-def visualize_days():
+def visualize_days(parsed_data):
     """Visualize data by day of week"""
-    data_file = parse(MY_FILE, ",")
-    # Returns a dict where it sums the total values for each key.
-    # In this case, the keys are the DaysOfWeek, and the values are
-    # a count of incidents.
-    counter = Counter(item["DayOfWeek"] for item in data_file)
 
-    # Separate out the counter to order it correctly when plotting.
-    data_list = [
-                  counter["Monday"],
-                  counter["Tuesday"],
-                  counter["Wednesday"],
-                  counter["Thursday"],
-                  counter["Friday"],
-                  counter["Saturday"],
-                  counter["Sunday"]
+    # Returns a dict that sums the total values for each key.
+    # keys = DaysOfWeek, values = count of incidents.
+    day_totals = Counter(item["DayOfWeek"] for item in parsed_data)
+
+    # Separate out the days to order it correctly when plotting.
+    day_list = [
+                  day_totals["Monday"],
+                  day_totals["Tuesday"],
+                  day_totals["Wednesday"],
+                  day_totals["Thursday"],
+                  day_totals["Friday"],
+                  day_totals["Saturday"],
+                  day_totals["Sunday"]
                 ]
+    # plt.xticks() only accepts tuples for labeling the x-axis
     day_tuple = tuple(["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"])
 
-    # Assign the data to a plot
-    plt.plot(data_list)
-
-    # Assign labels to the plot from day_list
-    plt.xticks(range(len(day_tuple)), day_tuple)
-
-    # Save the graph!
-    # If you look at new-coder/dataviz/tutorial_source, you should see
-    # the PNG file, "Days.png".  This is our graph!
-    plt.savefig("Days.png")
-
-    # Close figure
-    plt.clf()
+    plt.plot(day_list)       # Assign the data to a plot
+    plt.xticks(range(len(day_tuple)), day_tuple)  # Assign labels to the plot from day_list
+    plt.savefig("Days.png")  # Save the line graph
+    plt.clf()                # Close figure
 
 
-def visualize_type():
+def visualize_type(parsed_data):
     """Visualize data by category in a bar graph"""
-    data_file = parse(MY_FILE, ",")
-    # Same as before, this returns a dict where it sums the total
-    # incidents per Category.
-    counter = Counter(item["Category"] for item in data_file)
+    # Sums the total incidents per Category, graphs in a bar graph
+    counter = Counter(item["Category"] for item in parsed_data)
 
-    # Set the labels which are based on the keys of our counter.
-    labels = tuple(counter.keys())
-
-    # Set where the labels hit the x-axis
-    xlocations = np.arange(len(labels)) + 0.5
-
-    # Width of each bar
-    width = 0.5
+    xlabels = tuple(counter.keys())  # Set x-axis labels (based on the counter's keys)
+    xlocations = np.arange(len(xlabels)) + 0.5  # Use numpy to set where labels hit x-axis
+    width = 0.5                             # Width of each bar
 
     # Assign data to a bar plot
     plt.bar(xlocations, counter.values(), width=width)
 
     # Assign labels and tick location to x-axis
-    plt.xticks(xlocations + width / 2, labels, rotation=90)
+    plt.xticks(xlocations + width / 2, xlabels, rotation=90)
 
-    # Give some more room so the labels aren't cut off in the graph
-    plt.subplots_adjust(bottom=0.4)
-
-    # Make the overall graph/figure larger
-    plt.rcParams['figure.figsize'] = 12, 8
-
-    # Save the graph!
-    # If you look at new-coder/dataviz/tutorial_source, you should see
-    # the PNG file, "Type.png".  This is our graph!
-    plt.savefig("Type.png")
-
-    # Close figure
-    plt.clf()
+    plt.subplots_adjust(bottom=0.4)         # Add space at bottom so labels aren't cut off
+    plt.rcParams['figure.figsize'] = 13, 10  # Make the overall graph/figure larger
+    plt.savefig("Type.png")                 # save the graph
+    plt.clf()                               # close the figure
 
 
 def main():
-    visualize_days()
-    visualize_type()
+    data_file = p.parse(MY_FILE, ",")
+    visualize_days(data_file)
+    visualize_type(data_file)
 
 
 if __name__ == "__main__":
