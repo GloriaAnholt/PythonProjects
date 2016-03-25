@@ -30,8 +30,46 @@ def user_input():
 
     return num_disks, start_loc, dest_loc, helper
 
+
+def game_setup():
+
+    poles = []
+    start_loc = []
+    dest_loc = []
+    help_loc = []
+
+    num_disks, start, dest, helper = user_input()
+
+    for i in range(num_disks,0, -1):
+        start_loc.append(i)
+
+    if start == 1:
+        poles.append(start_loc)
+    elif dest == 1:
+        poles.append(dest_loc)
+    elif helper == 1:
+        poles.append(help_loc)
+
+    if start == 2:
+        poles.append(start_loc)
+    elif dest == 2:
+        poles.append(dest_loc)
+    elif helper == 2:
+        poles.append(help_loc)
+
+    if start == 3:
+        poles.append(start_loc)
+    elif dest == 3:
+        poles.append(dest_loc)
+    elif helper == 3:
+        poles.append(help_loc)
+
+    return num_disks, poles
+
+
+
 '''
-def game_setup(num_disks, start_loc):
+def draw_game(num_disks, start_loc):
 
     start_peg = []
 
@@ -79,14 +117,7 @@ def hanoi_solver(num_disks, from_loc, dest_loc, helper_loc):
 
 def main():
 
-    num_disks, start_loc, dest_loc, helper = user_input()
-
-    start_loc = []
-    dest_loc = []
-    helper = []
-    for i in range(num_disks,0, -1):
-        start_loc.append(i)
-
+    num_disks, poles = game_setup()
     hanoi_solver(num_disks, start_loc, dest_loc, helper)
 
 
