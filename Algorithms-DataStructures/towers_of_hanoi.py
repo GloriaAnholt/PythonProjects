@@ -30,7 +30,7 @@ def user_input():
 
     return num_disks, start_loc, dest_loc, helper
 
-
+'''
 def game_setup(num_disks, start_loc):
 
     start_peg = []
@@ -47,19 +47,21 @@ def game_setup(num_disks, start_loc):
     elif start_loc == 3:
         for i in range(num_disks-1, -1, -1):
             print "|", "\t\t", "|", "\t\t", start_peg[i]
-
+'''
 
 
 def move_disk(current_loc, dest_loc):
     """ The idea is that this would pop a disk off it's current location
     and then append it to the correct list.
     """
+    current_disk = current_loc[-1]
+    print "moving disk number %s from pole %s to pole %s" % (current_disk, current_loc, dest_loc)
     current_disk = current_loc.pop()
-    print "moving %s from %s to %s" % (current_disk, current_loc, dest_loc)
     dest_loc.append(current_disk)
+    return current_loc, dest_loc
 
 
-def hanoi_solver(num_disks, start_loc, dest_loc):
+def hanoi_solver(num_disks, from_loc, dest_loc, helper_loc):
     """ If the number of disks is one, just move it to the destination.
     Else, move the (n-1) stack to the helper, move the disk to the dest, move
     the stack to the dest-peg. The first and third calls are recursive, the middle
@@ -67,16 +69,28 @@ def hanoi_solver(num_disks, start_loc, dest_loc):
     """
 
     if num_disks == 1:
-        move_disk(start_loc, dest_loc)
+        move_disk(from_loc, dest_loc)
+    elif num_disks >=1:
+        hanoi_solver(num_disks - 1, from_loc, helper_loc, dest_loc)
+        move_disk(from_loc, dest_loc)
+        hanoi_solver(num_disks - 1, helper_loc, dest_loc, from_loc)
+
 
 
 def main():
 
     num_disks, start_loc, dest_loc, helper = user_input()
-    game_setup(num_disks, start_loc)
+
+    start_loc = []
+    dest_loc = []
+    helper = []
+    for i in range(num_disks,0, -1):
+        start_loc.append(i)
+
+    hanoi_solver(num_disks, start_loc, dest_loc, helper)
 
 
 
 
-
-main()
+if __name__ == '__main__':
+    main()
