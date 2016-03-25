@@ -64,7 +64,9 @@ def game_setup():
     elif helper == 3:
         poles.append(help_loc)
 
-    return num_disks, poles
+    print poles
+
+    return num_disks, start_loc, dest_loc, help_loc
 
 
 
@@ -117,7 +119,7 @@ def hanoi_solver(num_disks, from_loc, dest_loc, helper_loc):
 
 def main():
 
-    num_disks, poles = game_setup()
+    num_disks, start_loc, dest_loc, helper = game_setup()
     hanoi_solver(num_disks, start_loc, dest_loc, helper)
 
 
