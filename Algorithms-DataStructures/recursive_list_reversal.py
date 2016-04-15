@@ -5,6 +5,7 @@
 
 import unittest
 
+
 '''
 Write a recursive function to reverse a list.
 '''
@@ -22,9 +23,6 @@ def reverser(original_list, reversed_list):
     return reversed_list
 
 
-
-
-
 class ReverserTester(unittest.TestCase):
 
     def reverser(self):
@@ -32,12 +30,8 @@ class ReverserTester(unittest.TestCase):
         self.assertEqual(reverser([1], []), [1])
         self.assertEqual(reverser([1,2,3,4,5], []), [5,4,3,2,1])
         self.assertEqual(reverser(['a','b','c','d'], []), ['d','c','b','a'])
-        
+
         self.assertNotEquals(reverser([1,2,3,4,5], []), [1,2,3,4,5])
-
-
-
-
 
 
 if __name__ == '__main__':
