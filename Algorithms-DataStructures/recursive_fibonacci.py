@@ -13,18 +13,15 @@ Compare the performance of the recursive function to an iterative version.
 '''
 
 
-def fib_calc(nth, count=0, a=0, b=1):
+def fib_calc(nth, count=1, a=0, b=1):
 
-    if nth == 0:
-        return 0
+    if nth <= 1:
+        return nth
     elif nth == count:
-        return a + b
+        return b
     else:
-        count += 1
-        fib_calc(nth, count, b, a + b)
-        return a + b
-
-
+        print nth, count, a, b
+        return fib_calc(nth, count + 1, b, a + b)
 
 
 class Fib_Calc_Tester(unittest.TestCase):
