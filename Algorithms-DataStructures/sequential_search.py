@@ -25,7 +25,6 @@ def seq_search(items, wanted):
 
     return (located, pos)
 
-
 def seq_ordered_search(items, wanted):
 
     located = False
@@ -63,7 +62,7 @@ class Sec_Search_Tester(unittest.TestCase):
         self.assertEquals(seq_ordered_search([1,2,3], 2), (True, 1))
         self.assertEquals(seq_ordered_search([1,2,3], 4), (False, 2))
         self.assertEquals(seq_ordered_search([1,2,3,5,6], 4), (False, None))
-        
+
 
 if __name__ == '__main__':
     unittest.main()
