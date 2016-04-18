@@ -18,25 +18,22 @@ def bin_search(items, wanted):
 
     located = False
     end = len(items)
-    mid = end // 2
+    start = 0
 
-    while not located:
+    while not located and start < end:
+        mid = (start + end) // 2
         # Found the item we're looking for, break out
         if wanted == items[mid]:
             located = True
             break
         # The item we want is larger than our current location, select larger half
         elif wanted > items[mid]:
-            if mid >= end - 1:
-                return False   # Hit the end of the list without finding it
-            else:
-                mid = (mid + end) // 2
+            start = mid + 1
         # The item we want is smaller than our current location, select smaller half
+        # Floor division rounds down, don't need to subtract one.
         elif wanted < items[mid]:
-            if mid <= 0:
-                return False   # Hit the start of the list without finding it
-            else:
-                mid = mid // 2
+            end = mid
+
     return located
 
 
@@ -48,9 +45,9 @@ class Bin_Search_Tester(unittest.TestCase):
         self.assertEquals(bin_search([1,2,3,4,5], 3), True)
         self.assertEquals(bin_search([1,2,3,4,5], 2), True)
         self.assertEquals(bin_search([1,2,3,4,5], 11), False)
-        #self.assertEquals(bin_search([3,7,12,15,17,21,35,44,49,51], 11), False)
+        self.assertEquals(bin_search([3,7,12,15,17,21,35,44,49,51], 11), False)
         self.assertEquals(bin_search([3,7,12,15,17,21,35,44,49,51], 7), True)
-        #self.assertEquals(bin_search([3,7,12,15,17,21,35,44,49,51], 6), False)
+        self.assertEquals(bin_search([3,7,12,15,17,21,35,44,49,51], 6), False)
         self.assertEquals(bin_search([3,7,12,15,17,21,35,44,49,51], 2), False)
 
 
