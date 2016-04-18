@@ -26,6 +26,21 @@ def seq_search(items, wanted):
     return (located, pos)
 
 
+def seq_ordered_search(items, wanted):
+
+    located = False
+    pos = 0
+
+    for pos, item in enumerate(items):
+        if item == wanted:
+            located = True
+            break
+        elif item > wanted:
+            pos = None
+            break
+    return (located, pos)
+
+
 class Sec_Search_Tester(unittest.TestCase):
 
     def test_seq_search(self):
@@ -41,7 +56,14 @@ class Sec_Search_Tester(unittest.TestCase):
         self.assertEquals(seq_search([5,4, None, 'a', 3,2,'whelp',1], None), (True, 2))
         self.assertEquals(seq_search([5,4, None, [1,2,3], 'a', 3,2,'whelp',1], [1,2,3]), (True, 3))
 
-
+    def test_seq_oredered_search(self):
+        self.assertEquals(seq_ordered_search([], ''), (False, 0))
+        self.assertNotEquals(seq_ordered_search([], ''), (True, 0))
+        self.assertEquals(seq_ordered_search([1], 1), (True, 0))
+        self.assertEquals(seq_ordered_search([1,2,3], 2), (True, 1))
+        self.assertEquals(seq_ordered_search([1,2,3], 4), (False, 2))
+        self.assertEquals(seq_ordered_search([1,2,3,5,6], 4), (False, None))
+        
 
 if __name__ == '__main__':
     unittest.main()
