@@ -25,14 +25,14 @@ def insert_hash(items, table):
             table[hashed_val] = item
             print "inserting", item, "in slot", hashed_val
         else:
-            if isinstance(table[hashed_val], list):
-                table[hashed_val].append(item)
+            if isinstance(table[hashed_val], set):
+                table[hashed_val].add(item)
                 print "appending", item, "to slot", hashed_val
             else:
                 temp = table[hashed_val]
-                table[hashed_val] = []
-                table[hashed_val].append(temp)
-                table[hashed_val].append(item)
+                table[hashed_val] = set()
+                table[hashed_val].add(temp)
+                table[hashed_val].add(item)
                 print "converting slot", hashed_val, "to a list with items", temp, item
 
 def search_hash(item, table):
