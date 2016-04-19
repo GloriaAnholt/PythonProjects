@@ -6,6 +6,8 @@
 Uses a python list to hold the values in the hash table.
 Hash function is a basic module arithmetic:
    h(item) = item % table_size
+If there's a collision, converts the slot to a list and appends
+the new element to the list.
 '''
 
 
@@ -33,7 +35,22 @@ def insert_hash(items, table):
                 table[hashed_val].append(item)
                 print "converting slot", hashed_val, "to a list with items", temp, item
 
+def search_hash(item, table):
+
+    hashed_val = item % len(table)
+    if isinstance(table[hashed_val], int):
+        return table[hashed_val] == item
+    else:
+        for val in table[hashed_val]:
+            if item == val:
+                return True
+    return False
+
+
+
 
 htable = create_table(5)
 insert_hash([60,33,17,12,24,21,52,72,66,74,89], htable)
-print htable
+print "33 in table:", search_hash(33, htable)
+print "52 in table:", search_hash(52, htable)
+print "11 in table:", search_hash(11, htable)
