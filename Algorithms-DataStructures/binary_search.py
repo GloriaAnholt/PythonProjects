@@ -8,8 +8,7 @@ A binary search starts by examining the middle item: If it's the search item, th
 is completed. If it's not the correct item, we use the ordered nature of the list to
 eliminate half of the remaining items (larger or smaller, based on the comparison).
 
-The function takes a list and the search item and returns a boolean for membership,
-and the index, if found.
+The function takes a list and the search item and returns a boolean for membership.
 '''
 
 import unittest
@@ -37,6 +36,25 @@ def bin_search(items, wanted):
     return located
 
 
+def recursive_bin_search(items, wanted):
+
+    # If you trim the list down to zero and haven't found it, it's not there
+    if len(items) == 0:
+        return False
+    else:
+        mid = len(items) // 2
+        # Found it, return true
+        if wanted == items[mid]:
+            return True
+        # Call the search with the first half of the list
+        elif wanted < items[mid]:
+            return recursive_bin_search(items[:mid], wanted)
+        # Call the search with the second half of the list
+        elif wanted > items[mid]:
+            return recursive_bin_search(items[mid + 1:], wanted)
+
+
+
 
 class Bin_Search_Tester(unittest.TestCase):
 
@@ -49,6 +67,17 @@ class Bin_Search_Tester(unittest.TestCase):
         self.assertEquals(bin_search([3,7,12,15,17,21,35,44,49,51], 7), True)
         self.assertEquals(bin_search([3,7,12,15,17,21,35,44,49,51], 6), False)
         self.assertEquals(bin_search([3,7,12,15,17,21,35,44,49,51], 2), False)
+
+    def test_recursive_bin_search(self):
+        self.assertEquals(recursive_bin_search([1], 1), True)
+        self.assertEquals(recursive_bin_search([1,2,3,4,5], 3), True)
+        self.assertEquals(recursive_bin_search([1,2,3,4,5], 2), True)
+        self.assertEquals(recursive_bin_search([1,2,3,4,5], 11), False)
+        self.assertEquals(recursive_bin_search([3,7,12,15,17,21,35,44,49,51], 11), False)
+        self.assertEquals(recursive_bin_search([3,7,12,15,17,21,35,44,49,51], 7), True)
+        self.assertEquals(recursive_bin_search([3,7,12,15,17,21,35,44,49,51], 6), False)
+        self.assertEquals(recursive_bin_search([3,7,12,15,17,21,35,44,49,51], 2), False)
+
 
 
 if __name__ == '__main__':
