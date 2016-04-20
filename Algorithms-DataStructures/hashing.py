@@ -62,9 +62,19 @@ def search_hash(item, table):
             if item == val:
                 return True
 
-
-
-
-
+'''
+TO DO:
+ Implement a folding method
+  * dividing the item into equal-size pieces (the last piece may not be of equal size).
+  * Add pieces together to give the resulting hash value
+  * ex/ phone number 436-555-4601, (43 + 65 + 55 + 46 + 01) % (table size)
+Implement a mid-square method.
+ * Square the item, and then extract some portion of the resulting digits.
+ * ex/ 44^2 = 1,936. Extracting the middle two digits, 93 % table size
+Implement a hash functions for character-based items such as strings.
+  * The word 'cat' can be thought of as a sequence of ordinal values.
+  * ord('c') = 99, ord('a') = 97, ord('t') = 116
+  * To solve anagram collisions, multiply by position (99 * 1) + (97 * 2) + (119 * 3)
+'''
 
 
