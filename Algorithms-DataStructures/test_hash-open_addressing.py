@@ -28,6 +28,10 @@ class HashClassTester(unittest.TestCase):
         self.assertEqual(h, [10, 11, None, None, 12, 8, None, None, None, None])
         insert_hash(109, h)
         self.assertEqual(h, [10, 11, 109, None, 12, 8, None, None, None, None])
+        insert_hash(7, h)
+        self.assertEqual(h, [10, 11, 109, None, 12, 8, None, None, None, 7])
+        insert_hash(13, h)
+        self.assertEqual(h, [10, 11, 109, 13, 12, 8, None, None, None, 7])
 
     def test_search_hash(self):
         h = create_table(5)
@@ -39,6 +43,8 @@ class HashClassTester(unittest.TestCase):
         self.assertTrue(search_hash(109, h))
         self.assertTrue(search_hash(12, h))
         self.assertTrue(search_hash(8, h))
+        insert_hash(7, h), insert_hash(13, h)
+        self.assertEqual(h, [10, 11, 109, 13, 12, 8, None, None, None, 7])
 
     def test_remove_item(self):
         h = create_table(5)
@@ -57,6 +63,20 @@ class HashClassTester(unittest.TestCase):
         insert_hash(10, h)
         self.assertEqual(h, [10, 11, 'USED', None, 12, 'USED', None, None, None, None])
         self.assertTrue(search_hash(10, h))
+        insert_hash(7, h), insert_hash(13, h)  # A collision which requires wrapping
+        self.assertEqual(h, [10, 11, 13, None, 12, 'USED', None, None, None, 7])
+        self.assertTrue(remove_item(13, h))
+        self.assertEqual(h, [10, 11, 'USED', None, 12, 'USED', None, None, None, 7])
+        insert_hash(11, h)
+        self.assertEqual(h, [10, 11, 11, None, 12, 'USED', None, None, None, 7])
+        insert_hash(11, h)
+        self.assertEqual(h, [10, 11, 11, 11, 12, 'USED', None, None, None, 7])
+        self.assertTrue(remove_item(11, h))
+        self.assertEqual(h, [10, 'USED', 11, 11, 12, 'USED', None, None, None, 7])
+        self.assertTrue(remove_item(11, h))
+        self.assertEqual(h, [10, 'USED', 'USED', 11, 12, 'USED', None, None, None, 7])
+        self.assertTrue(remove_item(11, h))
+        self.assertEqual(h, [10, 'USED', 'USED', 'USED', 12, 'USED', None, None, None, 7])
 
 
 if __name__ == '__main__':
