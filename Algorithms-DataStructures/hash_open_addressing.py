@@ -18,18 +18,20 @@ def create_table(des_len):
 def insert_hash(item, table):
     # Hashes item, if the slot is empty it inserts, otherwise it walks the table
     # until it finds an open slot (None) or a 'USED' slot and puts it there.
-    # Wraps at the end of the table.
-    # TO DO: Apparently you shouldn't be able to add the same value twice. Hashes are
-    # a bit like sets. Check the collision before walking the table.
+    # Wraps at the end of the table. Does not accept duplicate entries.
     size = len(table)
     hashed_val = item**2 % size
-    if table[hashed_val] is None or table[hashed_val] == 'USED':
+    if table[hashed_val] == item:
+        return
+    elif table[hashed_val] is None or table[hashed_val] == 'USED':
         table[hashed_val] = item
     else:
         while table[hashed_val] is not None and table[hashed_val] != 'USED':
             hashed_val += 1
             if hashed_val >= size:
                 hashed_val = 0
+            if table[hashed_val] == item:
+                return
         table[hashed_val] = item
 
 def search_hash(item, table):
@@ -59,7 +61,7 @@ def remove_item(item, table):
         table[hashed_val] = 'USED'
         return True
     else:
-         if table[hashed_val] != item and table[hashed_val] is not None:
+        if table[hashed_val] != item and table[hashed_val] is not None:
             while table[hashed_val] is not None:
                 if table[hashed_val] == item:
                     table[hashed_val] = 'USED'
