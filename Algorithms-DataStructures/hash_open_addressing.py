@@ -19,6 +19,8 @@ def insert_hash(item, table):
     # Hashes item, if the slot is empty it inserts, otherwise it walks the table
     # until it finds an open slot (None) or a 'USED' slot and puts it there.
     # Wraps at the end of the table.
+    # TO DO: Apparently you shouldn't be able to add the same value twice. Hashes are
+    # a bit like sets. Check the collision before walking the table.
     size = len(table)
     hashed_val = item**2 % size
     if table[hashed_val] is None or table[hashed_val] == 'USED':
