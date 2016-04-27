@@ -37,12 +37,12 @@ class HashTableOAClassTester(unittest.TestCase):
         sys.stdout = StringIO()
         ht = OAHashTable()
         self.assertEqual(ht.size, 104683)
-        # Test with invalid input
+        # Test with invalid input, table defaults to 13 slots
         test_input = StringIO("a large number")
         sys.stdin = test_input
         sys.stdout = StringIO()
         ht = OAHashTable()
-        self.assertEqual(ht.size, 5)
+        self.assertEqual(ht.size, 13)
 
     def test_compute_hash(self):
         test_input = StringIO(1000)  # Create a ht with 1021 slots
@@ -113,6 +113,32 @@ class HashTableOAClassTester(unittest.TestCase):
         ht.insert_hash(1022)
         self.assertTrue(ht.search_hash(1022))
         self.assertEqual(ht.occupancy, 2)
+
+    def test_resize_table(self):
+        test_input = StringIO(13)
+        sys.stdin = test_input
+        sys.stdout = StringIO()
+        ht = OAHashTable()
+        self.assertTrue(ht.size, 13)
+        self.assertEqual(ht.occupancy, 0)
+        # Fill table to maximum capacity before resizing (12/13, triggers on #13)
+        ht.insert_hash(0), ht.insert_hash(1), ht.insert_hash(2), ht.insert_hash(3)
+        self.assertEqual(ht.size, 13)
+        self.assertEqual(ht.occupancy, 4)
+        ht.insert_hash(4), ht.insert_hash(5), ht.insert_hash(6), ht.insert_hash(7)
+        self.assertEqual(ht.size, 13)
+        self.assertEqual(ht.occupancy, 8)
+        ht.insert_hash(8), ht.insert_hash(9), ht.insert_hash(10), ht.insert_hash(11)
+        self.assertEqual(ht.size, 13)
+        self.assertEqual(ht.occupancy, 12)
+        # At this point, the table should be at 0.923 % full and resize up.
+        # 2 x 13 = 26, next largest prime is 31
+        ht.insert_hash(12)
+        self.assertEqual(ht.occupancy, 13)
+        self.assertEqual(ht.size, 31)
+
+
+
 
 
 if __name__ == '__main__':

@@ -19,28 +19,60 @@ class OAHashTable(object):
         self.initialize_table()
 
     def initialize_table(self):
-        """ Sets self.htable to a prime-length list populated None, up to a max length of 104683.
-        The prime selected is the first prime number larger than the desired length, where there
-        also exists a pair prime number exactly 2 smaller than the table size (for rehashing). """
-        two_off_primes = massage_primes()
-        largest_prime = two_off_primes[-1]
+        """ Asks the user for the approximate table size they want, this only happens on
+        the first creation of a table. If input is invalid, arbitrarily set the table to 13.
+        Otherwise, call the resize_hash function to deal with sizing logic."""
         try:
             des_len = int(raw_input('Approximately how large would you like your initial table to be?'))
         except ValueError:
-            self.size = two_off_primes[0]
-            self.__htable = [None] * two_off_primes[0]
+            self.size = 13
+            self.__htable = [None] * 13
             return
-
-        if des_len > largest_prime:
-            print "Largest available prime is %d, setting that as max table size." % largest_prime
-            self.size = largest_prime
-            self.__htable = [None] * largest_prime
         else:
-            i = 0
-            while des_len > two_off_primes[i]:
-                i += 1
-            self.size = two_off_primes[i]
-            self.__htable = [None] * two_off_primes[i]
+            self.resize_table(des_len)
+
+    def resize_table(self, des_len):
+        """ Sets self.htable to a prime-length list, up to a max length of 104683. The prime
+        selected is the first prime number larger than the desired length, where there also
+        exists a pair prime number exactly 2 smaller than the table size (for rehashing).
+        If it's the first creation of the table, fills the list with Nones; if it's a resizing
+        of the table, rehashes every single entry and reinserts them. """
+
+        two_off_primes = massage_primes()
+        largest_prime = two_off_primes[-1]
+        # If this is the first time making the table, populate with Nones
+        if self.occupancy == 0:
+            if des_len > largest_prime:
+                print "Largest available prime is %d, setting as max table size." % largest_prime
+                self.size = largest_prime
+                self.__htable = [None] * largest_prime
+            else:
+                i = 0
+                while des_len > two_off_primes[i]:
+                    i += 1
+                self.size = two_off_primes[i]
+                self.__htable = [None] * two_off_primes[i]
+        # Otherwise, this is a resizing up, and we need to rehash every member
+        # Makes a new table, fills with old tables items, then moves pointer to the new table
+        else:
+            if des_len > largest_prime:
+                self.size = largest_prime
+                new_table = [None] * largest_prime
+            else:
+                i = 0
+                while des_len > two_off_primes[i]:
+                    i += 1
+                self.size = two_off_primes[i]
+                new_table = [None] * two_off_primes[i]
+
+            for entry in self.__htable:
+                if entry == 'USED' or entry == None:
+                    pass
+                else:
+                    hashedval = self.compute_hash(entry)
+                    new_table[hashedval] = entry
+            self.__htable = new_table
+            return
 
     def compute_hash(self, item):
         """ Given a item, returns its hashed value """
@@ -52,7 +84,12 @@ class OAHashTable(object):
         """ Hashes item, if the slot is empty it inserts, otherwise it walks the table
         until it finds an open slot (None) or a 'USED' slot and puts it there.
         Wraps at the end of the table. Does not accept duplicate entries. """
+
+        if (float(self.occupancy) / float(self.size)) >= .9:
+            self.resize_table(self.size * 2)
+
         hashed_val = self.compute_hash(item)
+
         if self.__htable[hashed_val] == item:
             return
         elif self.__htable[hashed_val] is None or self.__htable[hashed_val] == 'USED':
