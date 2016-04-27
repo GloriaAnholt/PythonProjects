@@ -29,6 +29,7 @@ class OAHashTable(object):
         except ValueError:
             self.size = two_off_primes[0]
             self.htable = [None] * two_off_primes[0]
+            return
 
         if des_len > largest_prime:
             print "Largest available prime is %d, setting that as max table size." % largest_prime
