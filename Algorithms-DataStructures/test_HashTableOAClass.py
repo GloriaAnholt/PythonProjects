@@ -61,11 +61,11 @@ class HashTableOAClassTester(unittest.TestCase):
         ht = OAHashTable()
         # Basic insertion _appears_ to work, doesn't duplicate
         self.assertEqual(ht.size, 1021)
-        ht.insert_hash(650)
+        ht.insert_hash(650, "item")
         self.assertEqual(ht.occupancy, 1)
-        ht.insert_hash(650)
+        ht.insert_hash(650, "item")
         self.assertEqual(ht.occupancy, 1)
-        ht.insert_hash(65)
+        ht.insert_hash(65, "different item")
         self.assertEqual(ht.occupancy, 2)
 
     def test_search_hash(self):
@@ -74,12 +74,12 @@ class HashTableOAClassTester(unittest.TestCase):
         sys.stdout = StringIO()
         ht = OAHashTable()
         # Cause two intentional collisions, makes sure everything is still added
-        ht.insert_hash(1)
-        ht.insert_hash(1022)
-        ht.insert_hash(1023)
-        self.assertEqual(ht.occupancy, 3)
+        ht.insert_hash(1, "item")
         self.assertTrue(ht.search_hash(1))
+        ht.insert_hash(1022, "stuff")
         self.assertTrue(ht.search_hash(1022))
+        ht.insert_hash(1023, "stuff")
+        self.assertEqual(ht.occupancy, 3)
         self.assertTrue(ht.search_hash(1023))
         self.assertFalse(ht.search_hash(2))
 
@@ -89,9 +89,9 @@ class HashTableOAClassTester(unittest.TestCase):
         sys.stdout = StringIO()
         ht = OAHashTable()
         # Intentionally cause two collisions
-        ht.insert_hash(1)
-        ht.insert_hash(1022)
-        ht.insert_hash(1023)
+        ht.insert_hash(1, "item")
+        ht.insert_hash(1022, "stuff")
+        ht.insert_hash(1023, "things")
         # Remove an item, make sure it's gone and the occupancy is smaller
         self.assertTrue(ht.remove_item(1022))
         self.assertFalse(ht.search_hash(1022))
@@ -100,17 +100,18 @@ class HashTableOAClassTester(unittest.TestCase):
         self.assertTrue(ht.remove_item(1))
         self.assertFalse(ht.search_hash(1))
         self.assertEqual(ht.occupancy, 1)
-        ht.insert_hash(2014)
+        ht.insert_hash(2014, "widget")
         self.assertTrue(ht.search_hash(2014))
         self.assertEqual(ht.occupancy, 2)
         self.assertTrue(ht.remove_item(2014))
         self.assertFalse(ht.search_hash(2014))
         self.assertEqual(ht.occupancy, 1)
-        # Check duplicates
-        ht.insert_hash(1023)
+        # Check that duplicates don't insert
+        ht.insert_hash(1023, "things")
         self.assertTrue(ht.search_hash(1023))
-        # Check used spots
-        ht.insert_hash(1022)
+        self.assertEqual(ht.occupancy, 1)
+        # Check the used spots can take items
+        ht.insert_hash(1022, "something else")
         self.assertTrue(ht.search_hash(1022))
         self.assertEqual(ht.occupancy, 2)
 
@@ -122,38 +123,37 @@ class HashTableOAClassTester(unittest.TestCase):
         self.assertTrue(ht.size, 13)
         self.assertEqual(ht.occupancy, 0)
         # Fill table to maximum capacity before resizing (12/13, triggers on #13)
-        ht.insert_hash(0), ht.insert_hash(1), ht.insert_hash(2), ht.insert_hash(3), ht.insert_hash(4)
+        ht.insert_hash(0, 'a'), ht.insert_hash(1, 'b'), ht.insert_hash(2, 'c')
+        ht.insert_hash(3, 'd'), ht.insert_hash(4, 'e')
         self.assertEqual(ht.size, 13)
         self.assertEqual(ht.occupancy, 5)
-        ht.insert_hash(5), ht.insert_hash(6), ht.insert_hash(7), ht.insert_hash(8), ht.insert_hash(9)
+        ht.insert_hash(5, 'f'), ht.insert_hash(6, 'g'), ht.insert_hash(7, 'h')
+        ht.insert_hash(8, 'i'), ht.insert_hash(9, 'j')
         self.assertEqual(ht.size, 13)
         self.assertEqual(ht.occupancy, 10)
         # At this point, the table should be at 0.769 % full and resize up.
         # 2 x 13 = 26, next largest prime is 31
-        ht.insert_hash(10)
+        ht.insert_hash(10, 'k')
         self.assertEqual(ht.size, 31)
         self.assertEqual(ht.occupancy, 11)
         # The next full point for a table of 31 should happen at 22 elements.
         # Trying to insert the 23rd should cause a resize to 73. (Started at 0, i=21)
         for i in range(11,22):
-            ht.insert_hash(i)
+            ht.insert_hash(i, i+10)
         self.assertEqual(ht.size, 31)
         self.assertEqual(ht.occupancy, 22)
-        ht.insert_hash(22)
+        ht.insert_hash(22, "stuff")
         self.assertEqual(ht.size, 73)
         self.assertEqual(ht.occupancy, 23)
         # The next full point for a table of 73 should happen at 52 elements.
         # Trying to insert the 53rd should cause a resize to 151.
         for i in range(23,52):
-            ht.insert_hash(i)
+            ht.insert_hash(i, i+20)
         self.assertEqual(ht.size, 73)
         self.assertEqual(ht.occupancy, 52)
-        ht.insert_hash(52)
+        ht.insert_hash(52, "other thing")
         self.assertEqual(ht.size, 151)
         self.assertEqual(ht.occupancy, 53)
-
-
-
 
 
 

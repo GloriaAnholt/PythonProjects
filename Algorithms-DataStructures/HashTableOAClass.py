@@ -37,7 +37,6 @@ class OAHashTable(object):
         exists a pair prime number exactly 2 smaller than the table size (for rehashing).
         If it's the first creation of the table, fills the list with Nones; if it's a resizing
         of the table, rehashes every single entry and reinserts them. """
-
         two_off_primes = massage_primes()
         largest_prime = two_off_primes[-1]
         # If this is the first time making the table, populate with Nones
@@ -69,8 +68,8 @@ class OAHashTable(object):
                 if entry == 'USED' or entry == None:
                     pass
                 else:
-                    hashedval = self.compute_hash(entry)
-                    new_table[hashedval] = entry
+                    hashedval = self.compute_hash(entry[0])
+                    new_table[hashedval] = (entry[0], entry[1])
             self.__htable = new_table
             return
 
@@ -80,60 +79,63 @@ class OAHashTable(object):
         hashedval = item ** 2
         return hashedval % self.size
 
-    def insert_hash(self, item):
+    def insert_hash(self, key, value):
         """ Hashes item, if the slot is empty it inserts, otherwise it walks the table
         until it finds an open slot (None) or a 'USED' slot and puts it there.
         Wraps at the end of the table. Does not accept duplicate entries. """
+        #TODO list of tuples with key value pairs. key is thing before it gets hashed, value is some value
 
         if (float(self.occupancy) / float(self.size)) >= .70:
             self.resize_table(self.size * 2)
 
-        hashed_val = self.compute_hash(item)
+        hashed_val = self.compute_hash(key)
 
-        if self.__htable[hashed_val] == item:
-            return
-        elif self.__htable[hashed_val] is None or self.__htable[hashed_val] == 'USED':
-            self.__htable[hashed_val] = item
+        if self.__htable[hashed_val] is None or self.__htable[hashed_val] == 'USED':
+            self.__htable[hashed_val] = (key, value)
             self.occupancy += 1
+        elif isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
+            return
         else:
             while self.__htable[hashed_val] is not None and self.__htable[hashed_val] != 'USED':
                 hashed_val += 1
                 if hashed_val >= self.size:
                     hashed_val = 0
-                if self.__htable[hashed_val] == item:
+                if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
                     return
-            self.__htable[hashed_val] = item
+            self.__htable[hashed_val] = (key, value)
             self.occupancy += 1
 
-    def search_hash(self, item):
+    def search_hash(self, key):
         """ Hashes item, checks if it's in the hash table - if it's not where it's expected
         to be, walks the table until a None is found. Returns a boolean. """
-        hashed_val = self.compute_hash(item)
-        if self.__htable[hashed_val] == item:
+        # TODO: Should searching a hash for a key return the value?
+        hashed_val = self.compute_hash(key)
+
+        if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
             return True
         else:
             if self.__htable[hashed_val] is not None:
                 while self.__htable[hashed_val] is not None:
-                    if self.__htable[hashed_val] == item:
-                        return True
                     hashed_val += 1
                     if hashed_val >= self.size:
                         hashed_val = 0
+                    if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
+                        return True
             return False
 
-    def remove_item(self, item):
-        """ Searches for an item in the hash table, if it's not in the proper slot,
-        checks until you hit the first None. When the item is found, it's replaced
-        with a marker and returns a boolean. """
-        hashed_val = self.compute_hash(item)
-        if self.__htable[hashed_val] == item:
+    def remove_item(self, key):
+        """ Searches for a key in the hash table, if it's not in the proper slot,
+        checks until you hit the first None. When the key is found, it's replaced
+        with a USED marker and returns a boolean. """
+        hashed_val = self.compute_hash(key)
+        if self.__htable[hashed_val][0] == key:
             self.__htable[hashed_val] = 'USED'
             self.occupancy -= 1
             return True
         else:
-            if self.__htable[hashed_val] != item and self.__htable[hashed_val] is not None:
+            if self.__htable[hashed_val][0] != key and self.__htable[hashed_val] is not None:
                 while self.__htable[hashed_val] is not None:
-                    if self.__htable[hashed_val] == item:
+                    if self.__htable[hashed_val][0] == key:
                         self.__htable[hashed_val] = 'USED'
                         self.occupancy -= 1
                         return True
