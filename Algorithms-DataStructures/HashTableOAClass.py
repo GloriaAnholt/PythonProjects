@@ -83,27 +83,21 @@ class OAHashTable(object):
         """ Hashes item, if the slot is empty it inserts, otherwise it walks the table
         until it finds an open slot (None) or a 'USED' slot and puts it there.
         Wraps at the end of the table. Does not accept duplicate entries. """
-        #TODO list of tuples with key value pairs. key is thing before it gets hashed, value is some value
 
         if (float(self.occupancy) / float(self.size)) >= .70:
             self.resize_table(self.size * 2)
 
         hashed_val = self.compute_hash(key)
 
-        if self.__htable[hashed_val] is None or self.__htable[hashed_val] == 'USED':
-            self.__htable[hashed_val] = (key, value)
-            self.occupancy += 1
-        elif isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
-            return
-        else:
-            while self.__htable[hashed_val] is not None and self.__htable[hashed_val] != 'USED':
-                hashed_val += 1
-                if hashed_val >= self.size:
-                    hashed_val = 0
-                if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
-                    return
-            self.__htable[hashed_val] = (key, value)
-            self.occupancy += 1
+        while self.__htable[hashed_val] is not None and self.__htable[hashed_val] != 'USED':
+            if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
+                return
+            hashed_val += 1
+            if hashed_val >= self.size:
+                hashed_val = 0
+
+        self.__htable[hashed_val] = (key, value)
+        self.occupancy += 1
 
     def search_hash(self, key):
         """ Hashes item, checks if it's in the hash table - if it's not where it's expected
