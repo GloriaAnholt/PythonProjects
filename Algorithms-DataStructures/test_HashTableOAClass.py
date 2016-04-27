@@ -44,6 +44,75 @@ class HashTableOAClassTester(unittest.TestCase):
         ht = OAHashTable()
         self.assertEqual(ht.size, 5)
 
+    def test_compute_hash(self):
+        test_input = StringIO(1000)  # Create a ht with 1021 slots
+        sys.stdin = test_input
+        sys.stdout = StringIO()
+        ht = OAHashTable()
+        self.assertEqual(ht.size, 1021)
+        self.assertEqual(ht.compute_hash(650), 827)
+        self.assertEqual(ht.compute_hash(1024), 9)
+        self.assertEqual(ht.compute_hash(123456789), 207)
+
+    def test_insert_hash(self):
+        test_input = StringIO(1000)  # Create a ht with 1021 slots
+        sys.stdin = test_input
+        sys.stdout = StringIO()
+        ht = OAHashTable()
+        # Basic insertion _appears_ to work, doesn't duplicate
+        self.assertEqual(ht.size, 1021)
+        ht.insert_hash(650)
+        self.assertEqual(ht.occupancy, 1)
+        ht.insert_hash(650)
+        self.assertEqual(ht.occupancy, 1)
+        ht.insert_hash(65)
+        self.assertEqual(ht.occupancy, 2)
+
+    def test_search_hash(self):
+        test_input = StringIO(1000)  # Create a ht with 1021 slots
+        sys.stdin = test_input
+        sys.stdout = StringIO()
+        ht = OAHashTable()
+        # Cause two intentional collisions, makes sure everything is still added
+        ht.insert_hash(1)
+        ht.insert_hash(1022)
+        ht.insert_hash(1023)
+        self.assertEqual(ht.occupancy, 3)
+        self.assertTrue(ht.search_hash(1))
+        self.assertTrue(ht.search_hash(1022))
+        self.assertTrue(ht.search_hash(1023))
+        self.assertFalse(ht.search_hash(2))
+
+    def test_remove_item(self):
+        test_input = StringIO(1000)  # Create a ht with 1021 slots
+        sys.stdin = test_input
+        sys.stdout = StringIO()
+        ht = OAHashTable()
+        # Intentionally cause two collisions
+        ht.insert_hash(1)
+        ht.insert_hash(1022)
+        ht.insert_hash(1023)
+        # Remove an item, make sure it's gone and the occupancy is smaller
+        self.assertTrue(ht.remove_item(1022))
+        self.assertFalse(ht.search_hash(1022))
+        self.assertEqual(ht.occupancy, 2)
+        # Same as above
+        self.assertTrue(ht.remove_item(1))
+        self.assertFalse(ht.search_hash(1))
+        self.assertEqual(ht.occupancy, 1)
+        ht.insert_hash(2014)
+        self.assertTrue(ht.search_hash(2014))
+        self.assertEqual(ht.occupancy, 2)
+        self.assertTrue(ht.remove_item(2014))
+        self.assertFalse(ht.search_hash(2014))
+        self.assertEqual(ht.occupancy, 1)
+        # Check duplicates
+        ht.insert_hash(1023)
+        self.assertTrue(ht.search_hash(1023))
+        # Check used spots
+        ht.insert_hash(1022)
+        self.assertTrue(ht.search_hash(1022))
+        self.assertEqual(ht.occupancy, 2)
 
 
 if __name__ == '__main__':

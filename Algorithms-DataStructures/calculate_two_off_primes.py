@@ -21,7 +21,7 @@ def massage_primes():
         if (primes[i-1] + 2) == primes[i]:
             two_off_primes.append(primes[i])
 
-    print two_off_primes
+    return two_off_primes
 
 massage_primes()
 

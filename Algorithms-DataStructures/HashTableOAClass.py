@@ -15,7 +15,7 @@ class OAHashTable(object):
     def __init__(self):
         self.size = 0
         self.occupancy = 0
-        self.htable = []
+        self.__htable = []
         self.initialize_table()
 
     def initialize_table(self):
@@ -28,19 +28,19 @@ class OAHashTable(object):
             des_len = int(raw_input('Approximately how large would you like your initial table to be?'))
         except ValueError:
             self.size = two_off_primes[0]
-            self.htable = [None] * two_off_primes[0]
+            self.__htable = [None] * two_off_primes[0]
             return
 
         if des_len > largest_prime:
             print "Largest available prime is %d, setting that as max table size." % largest_prime
             self.size = largest_prime
-            self.htable = [None] * largest_prime
+            self.__htable = [None] * largest_prime
         else:
             i = 0
             while des_len > two_off_primes[i]:
                 i += 1
             self.size = two_off_primes[i]
-            self.htable = [None] * two_off_primes[i]
+            self.__htable = [None] * two_off_primes[i]
 
     def compute_hash(self, item):
         """ Given a item, returns its hashed value """
@@ -53,31 +53,31 @@ class OAHashTable(object):
         until it finds an open slot (None) or a 'USED' slot and puts it there.
         Wraps at the end of the table. Does not accept duplicate entries. """
         hashed_val = self.compute_hash(item)
-        if self.htable[hashed_val] == item:
+        if self.__htable[hashed_val] == item:
             return
-        elif self.htable[hashed_val] is None or self.htable[hashed_val] == 'USED':
-            self.htable[hashed_val] = item
+        elif self.__htable[hashed_val] is None or self.__htable[hashed_val] == 'USED':
+            self.__htable[hashed_val] = item
             self.occupancy += 1
         else:
-            while self.htable[hashed_val] is not None and self.htable[hashed_val] != 'USED':
+            while self.__htable[hashed_val] is not None and self.__htable[hashed_val] != 'USED':
                 hashed_val += 1
                 if hashed_val >= self.size:
                     hashed_val = 0
-                if self.htable[hashed_val] == item:
+                if self.__htable[hashed_val] == item:
                     return
-            self.htable[hashed_val] = item
+            self.__htable[hashed_val] = item
             self.occupancy += 1
 
     def search_hash(self, item):
         """ Hashes item, checks if it's in the hash table - if it's not where it's expected
         to be, walks the table until a None is found. Returns a boolean. """
         hashed_val = self.compute_hash(item)
-        if self.htable[hashed_val] == item:
+        if self.__htable[hashed_val] == item:
             return True
         else:
-            if self.htable[hashed_val] is not None:
-                while self.htable[hashed_val] is not None:
-                    if self.htable[hashed_val] == item:
+            if self.__htable[hashed_val] is not None:
+                while self.__htable[hashed_val] is not None:
+                    if self.__htable[hashed_val] == item:
                         return True
                     hashed_val += 1
                     if hashed_val >= self.size:
@@ -89,15 +89,15 @@ class OAHashTable(object):
         checks until you hit the first None. When the item is found, it's replaced
         with a marker and returns a boolean. """
         hashed_val = self.compute_hash(item)
-        if self.htable[hashed_val] == item:
-            self.htable[hashed_val] = 'USED'
+        if self.__htable[hashed_val] == item:
+            self.__htable[hashed_val] = 'USED'
             self.occupancy -= 1
             return True
         else:
-            if self.htable[hashed_val] != item and self.htable[hashed_val] is not None:
-                while self.htable[hashed_val] is not None:
-                    if self.htable[hashed_val] == item:
-                        self.htable[hashed_val] = 'USED'
+            if self.__htable[hashed_val] != item and self.__htable[hashed_val] is not None:
+                while self.__htable[hashed_val] is not None:
+                    if self.__htable[hashed_val] == item:
+                        self.__htable[hashed_val] = 'USED'
                         self.occupancy -= 1
                         return True
                     hashed_val += 1
