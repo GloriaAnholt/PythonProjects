@@ -42,7 +42,7 @@ class HashTableOAClassTester(unittest.TestCase):
         sys.stdin = test_input
         sys.stdout = StringIO()
         ht = OAHashTable()
-        self.assertEqual(ht.size, 13)
+        self.assertEqual(ht.size, 5)
 
     def test_compute_hash(self):
         test_input = StringIO(1000)  # Create a ht with 1021 slots
@@ -122,20 +122,36 @@ class HashTableOAClassTester(unittest.TestCase):
         self.assertTrue(ht.size, 13)
         self.assertEqual(ht.occupancy, 0)
         # Fill table to maximum capacity before resizing (12/13, triggers on #13)
-        ht.insert_hash(0), ht.insert_hash(1), ht.insert_hash(2), ht.insert_hash(3)
+        ht.insert_hash(0), ht.insert_hash(1), ht.insert_hash(2), ht.insert_hash(3), ht.insert_hash(4)
         self.assertEqual(ht.size, 13)
-        self.assertEqual(ht.occupancy, 4)
-        ht.insert_hash(4), ht.insert_hash(5), ht.insert_hash(6), ht.insert_hash(7)
+        self.assertEqual(ht.occupancy, 5)
+        ht.insert_hash(5), ht.insert_hash(6), ht.insert_hash(7), ht.insert_hash(8), ht.insert_hash(9)
         self.assertEqual(ht.size, 13)
-        self.assertEqual(ht.occupancy, 8)
-        ht.insert_hash(8), ht.insert_hash(9), ht.insert_hash(10), ht.insert_hash(11)
-        self.assertEqual(ht.size, 13)
-        self.assertEqual(ht.occupancy, 12)
-        # At this point, the table should be at 0.923 % full and resize up.
+        self.assertEqual(ht.occupancy, 10)
+        # At this point, the table should be at 0.769 % full and resize up.
         # 2 x 13 = 26, next largest prime is 31
-        ht.insert_hash(12)
-        self.assertEqual(ht.occupancy, 13)
+        ht.insert_hash(10)
         self.assertEqual(ht.size, 31)
+        self.assertEqual(ht.occupancy, 11)
+        # The next full point for a table of 31 should happen at 22 elements.
+        # Trying to insert the 23rd should cause a resize to 73. (Started at 0, i=21)
+        for i in range(11,22):
+            ht.insert_hash(i)
+        self.assertEqual(ht.size, 31)
+        self.assertEqual(ht.occupancy, 22)
+        ht.insert_hash(22)
+        self.assertEqual(ht.size, 73)
+        self.assertEqual(ht.occupancy, 23)
+        # The next full point for a table of 73 should happen at 52 elements.
+        # Trying to insert the 53rd should cause a resize to 151.
+        for i in range(23,52):
+            ht.insert_hash(i)
+        self.assertEqual(ht.size, 73)
+        self.assertEqual(ht.occupancy, 52)
+        ht.insert_hash(52)
+        self.assertEqual(ht.size, 151)
+        self.assertEqual(ht.occupancy, 53)
+
 
 
 

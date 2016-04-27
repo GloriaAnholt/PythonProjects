@@ -19,14 +19,14 @@ class OAHashTable(object):
         self.initialize_table()
 
     def initialize_table(self):
-        """ Asks the user for the approximate table size they want, this only happens on
-        the first creation of a table. If input is invalid, arbitrarily set the table to 13.
+        """ Asks the user for the approximate table size they want, this only happens on the
+        first creation of a table. If input is invalid, set the table to smallest pair prime (5).
         Otherwise, call the resize_hash function to deal with sizing logic."""
         try:
             des_len = int(raw_input('Approximately how large would you like your initial table to be?'))
         except ValueError:
-            self.size = 13
-            self.__htable = [None] * 13
+            self.size = 5
+            self.__htable = [None] * 5
             return
         else:
             self.resize_table(des_len)
@@ -85,7 +85,7 @@ class OAHashTable(object):
         until it finds an open slot (None) or a 'USED' slot and puts it there.
         Wraps at the end of the table. Does not accept duplicate entries. """
 
-        if (float(self.occupancy) / float(self.size)) >= .9:
+        if (float(self.occupancy) / float(self.size)) >= .70:
             self.resize_table(self.size * 2)
 
         hashed_val = self.compute_hash(item)
