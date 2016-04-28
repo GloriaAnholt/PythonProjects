@@ -36,42 +36,38 @@ class OAHashTable(object):
         selected is the first prime number larger than the desired length, where there also
         exists a pair prime number exactly 2 smaller than the table size (for rehashing).
         If it's the first creation of the table, fills the list with Nones; if it's a resizing
-        of the table, rehashes every single entry and reinserts them. """
+        of the table, rehashes every entry and reinserts them. """
         two_off_primes = massage_primes()
         largest_prime = two_off_primes[-1]
-        # If this is the first time making the table, populate with Nones
-        if self.occupancy == 0:
-            if des_len > largest_prime:
+
+        # Makes a new table, fills with old tables items, then moves pointer to the new table,
+        # Unless it's the first time making a table, then set to all Nones.
+        if des_len > largest_prime:
+            self.size = largest_prime
+            # If this is the first time making the table, populate with Nones
+            if self.occupancy == 0:
                 print "Largest available prime is %d, setting as max table size." % largest_prime
-                self.size = largest_prime
                 self.__htable = [None] * largest_prime
             else:
-                i = 0
-                while des_len > two_off_primes[i]:
-                    i += 1
-                self.size = two_off_primes[i]
-                self.__htable = [None] * two_off_primes[i]
-        # Otherwise, this is a resizing up, and we need to rehash every member
-        # Makes a new table, fills with old tables items, then moves pointer to the new table
-        else:
-            if des_len > largest_prime:
-                self.size = largest_prime
                 new_table = [None] * largest_prime
+        else:
+            i = 0
+            while des_len > two_off_primes[i]:
+                i += 1
+            self.size = two_off_primes[i]
+            # If this is the first time making the table, populate with Nones
+            if self.occupancy == 0:
+                self.__htable = [None] * two_off_primes[i]
             else:
-                i = 0
-                while des_len > two_off_primes[i]:
-                    i += 1
-                self.size = two_off_primes[i]
                 new_table = [None] * two_off_primes[i]
 
-            for entry in self.__htable:
-                if entry == 'USED' or entry == None:
-                    pass
-                else:
-                    hashedval = self.compute_hash(entry[0])
-                    new_table[hashedval] = (entry[0], entry[1])
-            self.__htable = new_table
-            return
+        for entry in self.__htable:
+            if entry == 'USED' or entry == None:
+                pass
+            else:
+                hashedval = self.compute_hash(entry[0])
+                new_table[hashedval] = (entry[0], entry[1])
+        self.__htable = new_table
 
     def compute_hash(self, item):
         """ Given a item, returns its hashed value """
