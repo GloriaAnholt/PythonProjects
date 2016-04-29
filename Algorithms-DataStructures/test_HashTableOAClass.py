@@ -76,7 +76,6 @@ class HashTableOAClassTester(unittest.TestCase):
         ht.insert_hash(testset, "can it hash sets? yup!")
         self.assertEqual(ht.occupancy, 5)
 
-
     def test_search_hash(self):
         test_input = StringIO(1000)  # Create a ht with 1021 slots
         sys.stdin = test_input
@@ -171,6 +170,18 @@ class HashTableOAClassTester(unittest.TestCase):
         ht.insert_hash(52, "other thing")
         self.assertEqual(ht.size, 151)
         self.assertEqual(ht.occupancy, 53)
+
+    def test_items(self):
+        test_input = StringIO(30)
+        sys.stdin = test_input
+        sys.stdout = StringIO()
+        ht = OAHashTable()
+        self.assertTrue(ht.size, 31)
+        self.assertEqual(ht.occupancy, 0)
+        for i in range(5,26):
+            ht.insert_hash(i, i+10)
+        self.assertEqual(ht.size, 31)
+        self.assertEqual(ht.occupancy, 21)
 
 
 if __name__ == '__main__':

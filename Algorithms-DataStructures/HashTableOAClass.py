@@ -136,3 +136,42 @@ class OAHashTable(object):
                     if hashed_val >= self.size:
                         hashed_val = 0
             return False
+
+    def keys(self):
+        """
+        Iterates over the table and prints the keys (skipping Nones).
+        """
+        if self.occupancy == 0:
+            print "[]"
+        else:
+            for i in range(self.size):
+                if self.__htable[i] == None or self.__htable == 'USED':
+                    pass
+                else:
+                    print self.__htable[i][0]
+
+    def values(self):
+        """
+        Iterates over the table and prints the values (skipping Nones).
+        """
+        if self.occupancy == 0:
+            print "[]"
+        else:
+            for i in range(self.size):
+                if self.__htable[i] == None or self.__htable == 'USED':
+                    pass
+                else:
+                    print self.__htable[i][1]
+
+    def items(self):
+        """
+        Iterates over the table and prints the key value pairs (skipping Nones).
+        """
+        if self.occupancy == 0:
+            print "[]"
+        else:
+            for i in range(self.size):
+                if self.__htable[i] == None or self.__htable == 'USED':
+                    pass
+                else:
+                    print self.__htable[i][0], self.__htable[i][1]
