@@ -39,7 +39,7 @@ class OAHashTable(object):
         of the table, rehashes every entry and reinserts them. """
         two_off_primes = massage_primes()
         largest_prime = two_off_primes[-1]
-
+        new_table = []
         # Makes a new table, fills with old tables items, then moves pointer to the new table,
         # Unless it's the first time making a table, then set to all Nones.
         if des_len > largest_prime:
@@ -48,6 +48,7 @@ class OAHashTable(object):
             if self.occupancy == 0:
                 print "Largest available prime is %d, setting as max table size." % largest_prime
                 self.__htable = [None] * largest_prime
+                return
             else:
                 new_table = [None] * largest_prime
         else:
@@ -58,6 +59,7 @@ class OAHashTable(object):
             # If this is the first time making the table, populate with Nones
             if self.occupancy == 0:
                 self.__htable = [None] * two_off_primes[i]
+                return
             else:
                 new_table = [None] * two_off_primes[i]
 
@@ -72,7 +74,10 @@ class OAHashTable(object):
     def compute_hash(self, item):
         """ Given a item, returns its hashed value """
         # TODO this needs a recompute for collisions, I think
-        hashedval = item ** 2
+        if isinstance(item, (int or float)):
+            hashedval = item ** 2
+        else:
+           hashedval = item.__hash__()
         return hashedval % self.size
 
     def insert_hash(self, key, value):
@@ -84,14 +89,12 @@ class OAHashTable(object):
             self.resize_table(self.size * 2)
 
         hashed_val = self.compute_hash(key)
-
         while self.__htable[hashed_val] is not None and self.__htable[hashed_val] != 'USED':
             if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
                 return
             hashed_val += 1
             if hashed_val >= self.size:
                 hashed_val = 0
-
         self.__htable[hashed_val] = (key, value)
         self.occupancy += 1
 

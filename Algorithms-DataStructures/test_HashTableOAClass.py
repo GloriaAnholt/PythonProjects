@@ -59,14 +59,23 @@ class HashTableOAClassTester(unittest.TestCase):
         sys.stdin = test_input
         sys.stdout = StringIO()
         ht = OAHashTable()
-        # Basic insertion _appears_ to work, doesn't duplicate
+        # Basic insertion _appears_ to work for immutable types (doesn't duplicate)
+        # Numbers, strings, and sets: OK!  Lists & Dicts: Not hashable!
         self.assertEqual(ht.size, 1021)
         ht.insert_hash(650, "item")
         self.assertEqual(ht.occupancy, 1)
         ht.insert_hash(650, "item")
         self.assertEqual(ht.occupancy, 1)
-        ht.insert_hash(65, "different item")
+        ht.insert_hash(650.000, "floats aren't ints!")
         self.assertEqual(ht.occupancy, 2)
+        ht.insert_hash(65, "different item")
+        self.assertEqual(ht.occupancy, 3)
+        ht.insert_hash("cat", "can it hash strings? yup!")
+        self.assertEqual(ht.occupancy, 4)
+        testset = (1,2,3)
+        ht.insert_hash(testset, "can it hash sets? yup!")
+        self.assertEqual(ht.occupancy, 5)
+
 
     def test_search_hash(self):
         test_input = StringIO(1000)  # Create a ht with 1021 slots
@@ -114,6 +123,14 @@ class HashTableOAClassTester(unittest.TestCase):
         ht.insert_hash(1022, "something else")
         self.assertTrue(ht.search_hash(1022))
         self.assertEqual(ht.occupancy, 2)
+        # Check if the hash can find non-number entries
+        ht.insert_hash(650.000, "floats aren't ints!")
+        self.assertTrue(ht.search_hash(650.000))
+        ht.insert_hash("cat", "can it hash strings? yup!")
+        self.assertTrue(ht.search_hash("cat"))
+        testset = (1,2,3)
+        ht.insert_hash(testset, "can it hash sets? yup!")
+        self.assertTrue(ht.search_hash(testset))
 
     def test_resize_table(self):
         test_input = StringIO(13)
@@ -154,7 +171,6 @@ class HashTableOAClassTester(unittest.TestCase):
         ht.insert_hash(52, "other thing")
         self.assertEqual(ht.size, 151)
         self.assertEqual(ht.occupancy, 53)
-
 
 
 if __name__ == '__main__':
