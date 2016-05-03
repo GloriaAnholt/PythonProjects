@@ -76,20 +76,20 @@ class HashTableOAClassTester(unittest.TestCase):
         ht.insert_hash(testset, "can it hash sets? yup!")
         self.assertEqual(ht.occupancy, 5)
 
-    def test_search_hash(self):
+    def test_membership(self):
         test_input = StringIO(1000)  # Create a ht with 1021 slots
         sys.stdin = test_input
         sys.stdout = StringIO()
         ht = OAHashTable()
         # Cause two intentional collisions, makes sure everything is still added
         ht.insert_hash(1, "item")
-        self.assertTrue(ht.search_hash(1))
+        self.assertTrue(1 in ht)
         ht.insert_hash(1022, "stuff")
-        self.assertTrue(ht.search_hash(1022))
+        self.assertTrue(1022 in ht)
         ht.insert_hash(1023, "stuff")
         self.assertEqual(ht.occupancy, 3)
-        self.assertTrue(ht.search_hash(1023))
-        self.assertFalse(ht.search_hash(2))
+        self.assertTrue(1023 in ht)
+        self.assertFalse(2 in ht)
 
     def test_remove_item(self):
         test_input = StringIO(1000)  # Create a ht with 1021 slots
@@ -102,34 +102,34 @@ class HashTableOAClassTester(unittest.TestCase):
         ht.insert_hash(1023, "things")
         # Remove an item, make sure it's gone and the occupancy is smaller
         self.assertTrue(ht.remove_item(1022))
-        self.assertFalse(ht.search_hash(1022))
+        self.assertFalse(1022 in ht)
         self.assertEqual(ht.occupancy, 2)
         # Same as above
         self.assertTrue(ht.remove_item(1))
-        self.assertFalse(ht.search_hash(1))
+        self.assertFalse(1 in ht)
         self.assertEqual(ht.occupancy, 1)
         ht.insert_hash(2014, "widget")
-        self.assertTrue(ht.search_hash(2014))
+        self.assertTrue(2014 in ht)
         self.assertEqual(ht.occupancy, 2)
         self.assertTrue(ht.remove_item(2014))
-        self.assertFalse(ht.search_hash(2014))
+        self.assertFalse(2014 in ht)
         self.assertEqual(ht.occupancy, 1)
         # Check that duplicates don't insert
         ht.insert_hash(1023, "things")
-        self.assertTrue(ht.search_hash(1023))
+        self.assertTrue(1023 in ht)
         self.assertEqual(ht.occupancy, 1)
         # Check the used spots can take items
         ht.insert_hash(1022, "something else")
-        self.assertTrue(ht.search_hash(1022))
+        self.assertTrue(1022 in ht)
         self.assertEqual(ht.occupancy, 2)
         # Check if the hash can find non-number entries
         ht.insert_hash(650.000, "floats aren't ints!")
-        self.assertTrue(ht.search_hash(650.000))
+        self.assertTrue(650.000 in ht)
         ht.insert_hash("cat", "can it hash strings? yup!")
-        self.assertTrue(ht.search_hash("cat"))
+        self.assertTrue("cat" in ht)
         testset = (1,2,3)
         ht.insert_hash(testset, "can it hash sets? yup!")
-        self.assertTrue(ht.search_hash(testset))
+        self.assertTrue(testset in ht)
 
     def test_resize_table(self):
         test_input = StringIO(13)

@@ -18,6 +18,22 @@ class OAHashTable(object):
         self.__htable = []
         self.initialize_table()
 
+    def __contains__(self, key):
+        """ Boolean for membership. Hashes item, checks if it's in the hash table,
+        if it's not where it's expected to be, walks the table until a None is found. """
+        hashed_val = self.compute_hash(key)
+        if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
+            return True
+        else:
+            if self.__htable[hashed_val] is not None:
+                while self.__htable[hashed_val] is not None:
+                    hashed_val += 1
+                    if hashed_val >= self.size:
+                        hashed_val = 0
+                    if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
+                        return True
+            return False
+
     def initialize_table(self):
         """ Asks the user for the approximate table size they want, this only happens on the
         first creation of a table. If input is invalid, set the table to smallest pair prime (5).
@@ -97,24 +113,6 @@ class OAHashTable(object):
                 hashed_val = 0
         self.__htable[hashed_val] = (key, value)
         self.occupancy += 1
-
-    def search_hash(self, key):
-        """ Hashes item, checks if it's in the hash table - if it's not where it's expected
-        to be, walks the table until a None is found. Returns a boolean. """
-        # TODO: Should searching a hash for a key return the value?
-        hashed_val = self.compute_hash(key)
-
-        if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
-            return True
-        else:
-            if self.__htable[hashed_val] is not None:
-                while self.__htable[hashed_val] is not None:
-                    hashed_val += 1
-                    if hashed_val >= self.size:
-                        hashed_val = 0
-                    if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
-                        return True
-            return False
 
     def remove_item(self, key):
         """ Searches for a key in the hash table, if it's not in the proper slot,
