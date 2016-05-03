@@ -34,6 +34,19 @@ class OAHashTable(object):
                         return True
             return False
 
+    def __iter__(self):
+        """ This method returns a new iterator object that can iterate over all the keys in the
+        container (skipping Nones), and should also be made available as the method iterkeys().
+        """
+        if self.occupancy == 0:
+            yield "[]"
+        else:
+            for i in range(self.size):
+                if self.__htable[i] == None or self.__htable == 'USED':
+                    pass
+                else:
+                    yield self.__htable[i][0]
+
     def initialize_table(self):
         """ Asks the user for the approximate table size they want, this only happens on the
         first creation of a table. If input is invalid, set the table to smallest pair prime (5).
@@ -96,7 +109,7 @@ class OAHashTable(object):
            hashedval = item.__hash__()
         return hashedval % self.size
 
-    def insert_hash(self, key, value):
+    def insert(self, key, value):
         """ Hashes item, if the slot is empty it inserts, otherwise it walks the table
         until it finds an open slot (None) or a 'USED' slot and puts it there.
         Wraps at the end of the table. Does not accept duplicate entries. """
@@ -106,7 +119,9 @@ class OAHashTable(object):
 
         hashed_val = self.compute_hash(key)
         while self.__htable[hashed_val] is not None and self.__htable[hashed_val] != 'USED':
+            # If you find your key, reset the value
             if isinstance(self.__htable[hashed_val], tuple) and self.__htable[hashed_val][0] == key:
+                self.__htable[hashed_val] = (key, value)
                 return
             hashed_val += 1
             if hashed_val >= self.size:
@@ -136,40 +151,34 @@ class OAHashTable(object):
             return False
 
     def keys(self):
-        """
-        Iterates over the table and prints the keys (skipping Nones).
-        """
+        """ Iterates over the table and prints the keys (skipping Nones). """
         if self.occupancy == 0:
-            print "[]"
+            yield "[]"
         else:
             for i in range(self.size):
                 if self.__htable[i] == None or self.__htable == 'USED':
                     pass
                 else:
-                    print self.__htable[i][0]
+                    yield self.__htable[i][0]
 
     def values(self):
-        """
-        Iterates over the table and prints the values (skipping Nones).
-        """
+        """ Iterates over the table and prints the values (skipping Nones). """
         if self.occupancy == 0:
-            print "[]"
+            yield "[]"
         else:
             for i in range(self.size):
                 if self.__htable[i] == None or self.__htable == 'USED':
                     pass
                 else:
-                    print self.__htable[i][1]
+                    yield self.__htable[i][1]
 
     def items(self):
-        """
-        Iterates over the table and prints the key value pairs (skipping Nones).
-        """
+        """ Iterates over the table and prints the key value pairs (skipping Nones). """
         if self.occupancy == 0:
-            print "[]"
+            yield "[]"
         else:
             for i in range(self.size):
                 if self.__htable[i] == None or self.__htable == 'USED':
                     pass
                 else:
-                    print self.__htable[i][0], self.__htable[i][1]
+                    yield self.__htable[i][0], self.__htable[i][1]
