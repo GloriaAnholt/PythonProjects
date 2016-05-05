@@ -15,21 +15,22 @@ def bubblesort(unsorted):
     """ Returns a sorted list. """
 
     sorted = False
+    eol = 1
 
     while not sorted:
         swaps = False
-        for i in range(len(unsorted) - 1):
+        for i in range(len(unsorted) - eol):
             if unsorted[i] > unsorted[i+1]:
-                temp = unsorted[i]
-                unsorted[i] = unsorted[i+1]
-                unsorted[i+1] = temp
+                unsorted[i], unsorted[i+1] = unsorted[i+1], unsorted[i]
                 swaps = True
         if swaps is False:
             sorted = True
+        else:
+            eol += 1
 
     return unsorted
 
 
 print bubblesort([5,6,3,4,1])
 
-print bubblesort([52,36,63,904,1])
+print bubblesort([50,396,63,904,1])
