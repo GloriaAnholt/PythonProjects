@@ -9,6 +9,9 @@ walks the list to the next unsorted element, and slides elements over until
 the correct spot is found and it is reinserted into the list. The list turns
 into a sorted front and unsorted back as it runs, completing when the last
 element is slid into its spot.
+Perhaps unexpectedly, the shifting operation requires approximately 1/3rd the
+processing work of an exchange since only one assignment is performed, making
+insertion sort faster than selection sort.
 """
 
 
@@ -30,3 +33,4 @@ def insertionsort(unsorted):
 
 print insertionsort([9, 8, 7, 6, 5, 4, 3, 2, 1, 0])
 print insertionsort([10, 9, 8, 22, 7, 6, 35, 5, 4, 3, 41, 2, 1, 100, 0])
+print insertionsort([10, 9, 10, 8, 22, 7, 6, 22, 35, 5, 4, 3, 22, 41, 2, 1, 100, 0])
