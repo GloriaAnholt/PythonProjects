@@ -19,7 +19,7 @@ def insertionsort(unsorted):
 
     key = None
 
-    for i in range(len(unsorted)):
+    for i in range(1, len(unsorted)):
         key = unsorted[i]
         for j in range(i-1, -1, -1):
             if key >= unsorted[j]:
