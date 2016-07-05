@@ -24,8 +24,7 @@ def insertionsort(unsorted):
         for j in range(i-1, -1, -1):
             if key >= unsorted[j]:
                 break
-            else:
-                key < unsorted[j]
+            else:   # key is less than current item
                 unsorted[j+1] = unsorted[j]
             unsorted[j] = key
     return unsorted
