@@ -17,7 +17,8 @@ def shellsort(unsorted):
     gap = length // 2
 
     while gap > 0:
-        for i, key in enumerate(unsorted):
+        for i in range(gap, length):
+            key = unsorted[i]
             while i >= gap and unsorted[i - gap] > key:
                 # If the earlier element is larger than the key, copy it over the key's slot
                 unsorted[i] = unsorted[i - gap]
