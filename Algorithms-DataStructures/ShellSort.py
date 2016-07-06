@@ -3,11 +3,12 @@
 # @totallygloria
 
 """
-Implementation of a shell (diminishing increment) sort.
-The list is divided into sublists by a step, the elements hit by the step
-are sorted relative to each other but not the entire list, then the step-set
-advances by one and the next subset is sorted. Repeat until entire list is hit,
-then insertion sort with a step of 1 the more-sorted list.
+Implementation of a Shell (diminishing increment) sort.
+The list is divided into sublists by a gap-length (1/2 list len), the elements hit by
+the step are sorted relative to each other but not the entire list, then the gap length
+is halved and the next subset is sorted relative to each other. Repeat until gap distance
+is 1, which is a regular insertion sort on a mostly-sorted list (best case).
+Ideal gap reduction is geometric: divide by 2.2; this implementation simply halves the gap.
 """
 
 
