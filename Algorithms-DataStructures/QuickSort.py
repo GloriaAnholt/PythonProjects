@@ -13,19 +13,33 @@ into place.
 
 def quicksort(unsorted):
 
+    setpivot(unsorted)
+    pivot = len(unsorted) // 2
+
+
+
+
+def setpivot(unsorted):
     # Select the pivot as the median of first-last-middle
+    mid = len(unsorted) // 2
     first = unsorted[0]
     last = unsorted[-1]
-    middle = unsorted[(len(unsorted)//2)]
+    middle = unsorted[mid]
 
-    if (last < first < middle) or (middle < first < last):
-        pivot = first
-    elif (first < middle < last) or (last < middle < first):
-        pivot = middle
+    if (last <= first <= middle) or (middle < first < last):
+        temp = middle                   # Pivot is first element, or they're all equal
+        unsorted[mid] = first           # Swap first element to middle
+        unsorted[0] = temp
+        print "first case: ", unsorted[mid]
+    elif (first < last < middle) or (first > last > middle):
+        temp = middle                   # Pivot is last element
+        unsorted[mid] = last           # Swap last element to middle
+        unsorted[-1] = temp
+        print "last case: ", unsorted[mid]
     else:
-        pivot = last
-
-    print pivot
+        print "middle is where it belongs"
 
 
-quicksort([9,1,2,200,4,5,-5])
+
+
+setpivot([1,2,2,3])
