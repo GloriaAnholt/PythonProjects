@@ -17,16 +17,24 @@ def shellsort(unsorted):
     gap = length // 2
 
     while gap > 0:
-        for i in range(length):
-            key = unsorted[i]
+        for i, key in enumerate(unsorted):
             while i >= gap and unsorted[i - gap] > key:
+                # If the earlier element is larger than the key, copy it over the key's slot
                 unsorted[i] = unsorted[i - gap]
+                # Adjust the index down the the previous step by the gap, check again
                 i -= gap
+            # Overwrite the earliest step with the value of the key; if sorted, does nothing
             unsorted[i] = key
         gap = gap // 2
 
 
 
 tester = [13, 6, 9, 4, 18, 16, 7, 3, 1]
+alist = [54, 26, -93, 17, 77, 31, 0, -44, 55, 20]
+alreadysorted = [1, 2, 3, 4, 5, 6, 7, 7, 8]
 shellsort(tester)
 print tester
+shellsort(alist)
+print alist
+shellsort(alreadysorted)
+print alreadysorted
