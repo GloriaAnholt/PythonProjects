@@ -17,24 +17,14 @@ def shellsort(unsorted):
     gap = length // 2
 
     while gap > 0:
-        print "gap = ", gap
-        for i in range(gap):
-            print "i = ", i
-            for j in range(i + gap, length, gap):
-                print "j = ", j
-                key = unsorted[j]
-                position = j
-                while position >= gap and unsorted[position - gap] > key:
-                    unsorted[position] = unsorted[position - gap]
-                    position = position - gap
-                    print unsorted, "inside while"
-
-                unsorted[position] = key
-                print unsorted, "outside while"
-
+        for i in range(length):
+            key = unsorted[i]
+            while i >= gap and unsorted[i - gap] > key:
+                unsorted[i] = unsorted[i - gap]
+                i -= gap
+            unsorted[i] = key
         gap = gap // 2
 
-    return unsorted
 
 
 tester = [13, 6, 9, 4, 18, 16, 7, 3, 1]
