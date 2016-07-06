@@ -14,9 +14,16 @@ into place.
 def quicksort(unsorted):
 
     setpivot(unsorted)
-    pivot = len(unsorted) // 2
+    mid = len(unsorted) // 2
+    pivot = unsorted[mid]
 
+    front = 0
+    back = len(unsorted)
 
+    for i in range(mid):
+        if unsorted[front] < pivot:
+            front += 1
+        
 
 
 def setpivot(unsorted):
