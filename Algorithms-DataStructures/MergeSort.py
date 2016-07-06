@@ -27,7 +27,7 @@ def mergesort(unsorted):
                 unsorted[i] = left[l]
                 l += 1
             else:
-                unsorted[i] = right[r]      # Else, add the right element
+                unsorted[i] = right[r]      # Otherwise, r is smaller so add the right element
                 r += 1
             i += 1
 
