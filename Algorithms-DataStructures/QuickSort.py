@@ -13,40 +13,56 @@ into place.
 
 def quicksort(unsorted):
 
-    setpivot(unsorted)
-    mid = len(unsorted) // 2
-    pivot = unsorted[mid]
-
-    front = 0
-    back = len(unsorted)
-
-    for i in range(mid):
-        if unsorted[front] < pivot:
-            front += 1
-        
-
-
-def setpivot(unsorted):
-    # Select the pivot as the median of first-last-middle
-    mid = len(unsorted) // 2
-    first = unsorted[0]
-    last = unsorted[-1]
-    middle = unsorted[mid]
-
-    if (last <= first <= middle) or (middle < first < last):
-        temp = middle                   # Pivot is first element, or they're all equal
-        unsorted[mid] = first           # Swap first element to middle
-        unsorted[0] = temp
-        print "first case: ", unsorted[mid]
-    elif (first < last < middle) or (first > last > middle):
-        temp = middle                   # Pivot is last element
-        unsorted[mid] = last           # Swap last element to middle
-        unsorted[-1] = temp
-        print "last case: ", unsorted[mid]
+    if len(unsorted) <= 1:      # Nope out for an empty or one-element array
+        print "noping out"
+        return unsorted
     else:
-        print "middle is where it belongs"
+        exchanger(unsorted, 0, len(unsorted) - 1)
+
+
+def exchanger(unsorted, start, stop):
+    pivot = getpivot(unsorted, start, stop)
+    print "pivot is", pivot, "start is", start, "stop is", stop
+    print unsorted
+
+    lmark = start
+    rmark = stop
+
+    while lmark < rmark:
+
+        while unsorted[lmark] < pivot and lmark < rmark:
+            lmark += 1
+        while unsorted[rmark] > pivot and lmark < rmark:
+            rmark -= 1
+
+        temp = unsorted[lmark]
+        unsorted[lmark] = unsorted[rmark]
+        unsorted[rmark] = temp
+
+    print unsorted
+    if start < stop:
+        exchanger(unsorted, start, lmark-1)  # sort the left side
+        exchanger(unsorted, rmark+1, stop)
+
+
+def getpivot(unsorted, start, stop):
+    # Select the pivot as the median of first-last-middle
+    first = unsorted[start]
+    last = unsorted[stop]
+    middle = unsorted[(start + stop) // 2]
+
+    # Need to be able to write over where the pivot was safely, so put the pivot in first
+    if (last <= first <= middle) or (middle <= first <= last):
+        return first                # Pivot is first element, or there are equals
+    elif (first < middle < last) or (last < middle < first):
+        unsorted[(start + stop) // 2] = first
+        unsorted[start] = middle
+        return middle               # Pivot is midpoint, move to front
+    else:
+        unsorted[start] = last
+        unsorted[stop] = first
+        return last                 # Pivot is last element, move to front
 
 
 
-
-setpivot([1,2,2,3])
+quicksort([9,5,16,13,4,10,8,17,11,15,3,12,7,2,19,6,1,0])
