@@ -21,23 +21,25 @@ def quicksort(unsorted):
 
 def exchanger(unsorted, start, stop):
 
-    if len(unsorted[start:stop]) >= 1:  # Nope out for an empty array
+    if stop - start > 0:  # Nope out for an empty set
         pivot = getpivot(unsorted, start, stop)
         lmark = start
         rmark = stop
 
-        while lmark < rmark:
-            while unsorted[lmark] < pivot and lmark < rmark:
+        while lmark <= rmark:
+            while unsorted[lmark] < pivot: # and lmark < rmark:
                 lmark += 1
-            while unsorted[rmark] > pivot and lmark < rmark:
+            while unsorted[rmark] > pivot: # and lmark < rmark:
                 rmark -= 1
-            if lmark < rmark:
+            if lmark <= rmark:
                 unsorted[lmark], unsorted[rmark] = unsorted[rmark], unsorted[lmark]
+                lmark += 1
+                rmark -= 1
 
         print unsorted, lmark, rmark, start, stop
 
-        exchanger(unsorted, start, lmark-1)  # sort the left side
-        exchanger(unsorted, rmark+1, stop)  # sort the right side
+        exchanger(unsorted, start, rmark)  # sort the left side
+        exchanger(unsorted, lmark, stop)  # sort the right side
 
 
 
@@ -55,6 +57,6 @@ def getpivot(unsorted, start, stop):
         return last                 # Pivot is last element
 
 
-tester = [9,5,16,13,4,10,8,17,11,18,15,3,12,7,2,19,6,1,20]
+tester = [9,5,16,13,4,10,8,17,11,18,15,3,12,7,2,19,6,1,20,11,11,11,-10]
 quicksort(tester)
 print "final list is:", tester
