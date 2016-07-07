@@ -2,7 +2,7 @@
 # 07.07.2016
 # @totallygloria
 
-import unittest
+import unittest, random
 from QuickSort import quicksort, exchanger, getpivot
 
 
@@ -24,8 +24,19 @@ class QuickSortTester(unittest.TestCase):
         self.assertEquals(getpivot([0, 2, 2, 2, 10, 2, 2, 2, 2, 10], 0, 9), 10)
         self.assertEquals(getpivot([10, 2, 2, 2, 0, 2, 2, 2, 2, 10], 0, 9), 10)
 
+    def test_quicksort(self):
+        # Base case: empty list or list of one element should return itself
+        self.assertEquals(quicksort([]), [])
+        self.assertEquals(quicksort([1]), [1])
+        # quicksort doesn't return anything, it just calls exchanger
+        # probably not possible to test that the list comes back sorted
 
-
+    def test_exchanger(self):
+        # A list of len <= 1 should return the list itself
+        self.assertEquals(exchanger([],0,100), [])
+        self.assertEquals(exchanger([1],0,1), [1])
+        # Test: list in reverse order
+        self.assertEquals(exchanger([], 0, 100), [])
 
 if __name__ == '__main__':
     unittest.main()

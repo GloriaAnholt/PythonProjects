@@ -21,27 +21,24 @@ def quicksort(unsorted):
 
 def exchanger(unsorted, start, stop):
 
-    if len(unsorted[start:stop]) <= 1:  # Nope out for an empty or one-element array
-        print "noping out"
-        return unsorted
+    if len(unsorted[start:stop]) >= 1:  # Nope out for an empty array
+        pivot = getpivot(unsorted, start, stop)
+        lmark = start
+        rmark = stop
 
-    pivot = getpivot(unsorted, start, stop)
-    lmark = start
-    rmark = stop
+        while lmark < rmark:
+            while unsorted[lmark] < pivot and lmark < rmark:
+                lmark += 1
+            while unsorted[rmark] > pivot and lmark < rmark:
+                rmark -= 1
+            if lmark < rmark:
+                unsorted[lmark], unsorted[rmark] = unsorted[rmark], unsorted[lmark]
 
-    while lmark < rmark:
-        while unsorted[lmark] < pivot and lmark < rmark:
-            lmark += 1
-        while unsorted[rmark] > pivot and lmark < rmark:
-            rmark -= 1
+        print unsorted, lmark, rmark, start, stop
 
-        temp = unsorted[lmark]
-        unsorted[lmark] = unsorted[rmark]
-        unsorted[rmark] = temp
-
-    if start < stop:
         exchanger(unsorted, start, lmark-1)  # sort the left side
-        exchanger(unsorted, rmark + 1, stop)  # sort the right side
+        exchanger(unsorted, rmark+1, stop)  # sort the right side
+
 
 
 def getpivot(unsorted, start, stop):
@@ -50,19 +47,14 @@ def getpivot(unsorted, start, stop):
     last = unsorted[stop]
     middle = unsorted[(start + stop) // 2]
 
-    # Need to be able to write over where the pivot was safely, so put the pivot in first
     if (last <= first <= middle) or (middle <= first <= last):
         return first                # Pivot is first element, or there are equals
     elif (first < middle < last) or (last < middle < first):
-        unsorted[(start + stop) // 2] = first
-        unsorted[start] = middle
-        return middle               # Pivot is midpoint, move to front
+        return middle               # Pivot is midpoint
     else:
-        unsorted[start] = last
-        unsorted[stop] = first
-        return last                 # Pivot is last element, move to front
+        return last                 # Pivot is last element
 
 
-#tester = [9,5,16,13,4,10,8,17,18,11,15,3,12,7,2,19,6,1,0,20, 11,11,11,11,11]
-#quicksort(tester)
-#print "final list is:", tester
+tester = [9,5,16,13,4,10,8,17,11,18,15,3,12,7,2,19,6,1,20]
+quicksort(tester)
+print "final list is:", tester
