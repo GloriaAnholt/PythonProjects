@@ -14,22 +14,22 @@ into place.
 def quicksort(unsorted):
 
     if len(unsorted) <= 1:      # Nope out for an empty or one-element array
-        print "noping out"
         return unsorted
     else:
         exchanger(unsorted, 0, len(unsorted) - 1)
 
 
 def exchanger(unsorted, start, stop):
-    pivot = getpivot(unsorted, start, stop)
-    print "pivot is", pivot, "start is", start, "stop is", stop
-    print unsorted
 
+    if len(unsorted[start:stop]) <= 1:  # Nope out for an empty or one-element array
+        print "noping out"
+        return unsorted
+
+    pivot = getpivot(unsorted, start, stop)
     lmark = start
     rmark = stop
 
     while lmark < rmark:
-
         while unsorted[lmark] < pivot and lmark < rmark:
             lmark += 1
         while unsorted[rmark] > pivot and lmark < rmark:
@@ -39,10 +39,9 @@ def exchanger(unsorted, start, stop):
         unsorted[lmark] = unsorted[rmark]
         unsorted[rmark] = temp
 
-    print unsorted
     if start < stop:
         exchanger(unsorted, start, lmark-1)  # sort the left side
-        exchanger(unsorted, rmark+1, stop)
+        exchanger(unsorted, rmark + 1, stop)  # sort the right side
 
 
 def getpivot(unsorted, start, stop):
@@ -64,5 +63,6 @@ def getpivot(unsorted, start, stop):
         return last                 # Pivot is last element, move to front
 
 
-
-quicksort([9,5,16,13,4,10,8,17,11,15,3,12,7,2,19,6,1,0])
+#tester = [9,5,16,13,4,10,8,17,18,11,15,3,12,7,2,19,6,1,0,20, 11,11,11,11,11]
+#quicksort(tester)
+#print "final list is:", tester
