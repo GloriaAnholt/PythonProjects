@@ -27,16 +27,14 @@ def exchanger(unsorted, start, stop):
         rmark = stop
 
         while lmark <= rmark:
-            while unsorted[lmark] < pivot: # and lmark < rmark:
+            while unsorted[lmark] < pivot:
                 lmark += 1
-            while unsorted[rmark] > pivot: # and lmark < rmark:
+            while unsorted[rmark] > pivot:
                 rmark -= 1
             if lmark <= rmark:
                 unsorted[lmark], unsorted[rmark] = unsorted[rmark], unsorted[lmark]
                 lmark += 1
                 rmark -= 1
-
-        print unsorted, lmark, rmark, start, stop
 
         exchanger(unsorted, start, rmark)  # sort the left side
         exchanger(unsorted, lmark, stop)  # sort the right side
@@ -58,5 +56,6 @@ def getpivot(unsorted, start, stop):
 
 
 tester = [9,5,16,13,4,10,8,17,11,18,15,3,12,7,2,19,6,1,20,11,11,11,-10]
+print "starting list is:", tester
 quicksort(tester)
 print "final list is:", tester
