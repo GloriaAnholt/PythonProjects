@@ -11,6 +11,11 @@ into place.
 """
 
 class QuickSort(object):
+    """
+    Implemented QS as a class in order to get at the array attribute directly: Classes
+    make testing very straightforward (how to test a recursive function without return
+    statements is (currently) unclear).
+    """
 
     def __init__(self):
         self.array = []
