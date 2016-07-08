@@ -18,13 +18,15 @@ class QuickSort(object):
     def quicksort(self):
 
         if len(self.array) <= 1:      # Nope out for an empty or one-element array
-            return
+            return self.array
         else:
             self.exchanger(0, len(self.array) - 1)
 
     def exchanger(self, start, stop):
 
-        if stop - start > 0:  # Nope out for an empty set
+        if stop - start <= 0:  # Nope out for an empty set
+            return
+        else:
             pivot = self.getpivot(start, stop)
             lmark = start
             rmark = stop
@@ -55,9 +57,10 @@ class QuickSort(object):
         else:
             return last                 # Pivot is last element
 
-
+'''
 t1 = QuickSort()
 t1.array = [9, 5, 16, 13, 4, 10, 8, 17, 11, 18, 15, 3, 12, 7, 2, 19, 6, 1, 20, 11, 11, 11, -10]
 print "starting list is:", t1.array
 t1.quicksort()
 print "final list is:", t1.array
+'''
