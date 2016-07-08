@@ -49,7 +49,14 @@ class QuickSortTester(unittest.TestCase):
         # A list of len <= 1 should return the list itself
         self.assertEquals(qs.exchanger(10, 10), None)
         self.assertEquals(qs.exchanger(10, 0), None)
-        qs.array = [n for n in random.randrange(1,101,1)]
+        for trial in range(100):
+            qs.array = []
+            for i in range(10000):
+                qs.array.append(random.randrange(-100000,100000))
+            copyqs = list(qs.array)
+            copyqs.sort()
+            qs.exchanger(0, 9999)
+            self.assertEquals(qs.array,copyqs)
 
 
 
