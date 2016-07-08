@@ -42,10 +42,15 @@ class OAHashTable(object):
             yield "[]"
         else:
             for i in range(self.size):
-                if self.__htable[i] == None or self.__htable == 'USED':
+                if self.__htable[i] is None or self.__htable == 'USED':
                     pass
                 else:
                     yield self.__htable[i][0]
+
+    def __len__(self):
+        """ This method overwrites the build-in len function to return the current occupancy of
+        the table. """
+        return self.occupancy
 
     def initialize_table(self):
         """ Asks the user for the approximate table size they want, this only happens on the
@@ -68,7 +73,6 @@ class OAHashTable(object):
         of the table, rehashes every entry and reinserts them. """
         two_off_primes = massage_primes()
         largest_prime = two_off_primes[-1]
-        new_table = []
         # Makes a new table, fills with old tables items, then moves pointer to the new table,
         # Unless it's the first time making a table, then set to all Nones.
         if des_len > largest_prime:
@@ -93,7 +97,7 @@ class OAHashTable(object):
                 new_table = [None] * two_off_primes[i]
 
         for entry in self.__htable:
-            if entry == 'USED' or entry == None:
+            if entry == 'USED' or entry is None:
                 pass
             else:
                 hashedval = self.compute_hash(entry[0])
@@ -106,7 +110,7 @@ class OAHashTable(object):
         if isinstance(item, (int or float)):
             hashedval = item ** 2
         else:
-           hashedval = item.__hash__()
+            hashedval = item.__hash__()
         return hashedval % self.size
 
     def insert(self, key, value):
@@ -156,7 +160,7 @@ class OAHashTable(object):
             yield "[]"
         else:
             for i in range(self.size):
-                if self.__htable[i] == None or self.__htable == 'USED':
+                if self.__htable[i] is None or self.__htable == 'USED':
                     pass
                 else:
                     yield self.__htable[i][0]
@@ -167,7 +171,7 @@ class OAHashTable(object):
             yield "[]"
         else:
             for i in range(self.size):
-                if self.__htable[i] == None or self.__htable == 'USED':
+                if self.__htable[i] is None or self.__htable == 'USED':
                     pass
                 else:
                     yield self.__htable[i][1]
@@ -178,7 +182,7 @@ class OAHashTable(object):
             yield "[]"
         else:
             for i in range(self.size):
-                if self.__htable[i] == None or self.__htable == 'USED':
+                if self.__htable[i] is None or self.__htable == 'USED':
                     pass
                 else:
                     yield self.__htable[i][0], self.__htable[i][1]

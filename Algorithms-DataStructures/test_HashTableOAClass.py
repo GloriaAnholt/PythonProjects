@@ -72,7 +72,7 @@ class HashTableOAClassTester(unittest.TestCase):
         self.assertEqual(ht.occupancy, 3)
         ht.insert("cat", "can it hash strings? yup!")
         self.assertEqual(ht.occupancy, 4)
-        testset = (1,2,3)
+        testset = (1, 2, 3)
         ht.insert(testset, "can it hash sets? yup!")
         self.assertEqual(ht.occupancy, 5)
 
@@ -127,7 +127,7 @@ class HashTableOAClassTester(unittest.TestCase):
         self.assertTrue(650.000 in ht)
         ht.insert("cat", "can it hash strings? yup!")
         self.assertTrue("cat" in ht)
-        testset = (1,2,3)
+        testset = (1, 2, 3)
         ht.insert(testset, "can it hash sets? yup!")
         self.assertTrue(testset in ht)
 
@@ -154,7 +154,7 @@ class HashTableOAClassTester(unittest.TestCase):
         self.assertEqual(ht.occupancy, 11)
         # The next full point for a table of 31 should happen at 22 elements.
         # Trying to insert the 23rd should cause a resize to 73. (Started at 0, i=21)
-        for i in range(11,22):
+        for i in range(11, 22):
             ht.insert(i, i + 10)
         self.assertEqual(ht.size, 31)
         self.assertEqual(ht.occupancy, 22)
@@ -163,7 +163,7 @@ class HashTableOAClassTester(unittest.TestCase):
         self.assertEqual(ht.occupancy, 23)
         # The next full point for a table of 73 should happen at 52 elements.
         # Trying to insert the 53rd should cause a resize to 151.
-        for i in range(23,52):
+        for i in range(23, 52):
             ht.insert(i, i + 20)
         self.assertEqual(ht.size, 73)
         self.assertEqual(ht.occupancy, 52)
@@ -178,10 +178,12 @@ class HashTableOAClassTester(unittest.TestCase):
         ht = OAHashTable()
         self.assertTrue(ht.size, 31)
         self.assertEqual(ht.occupancy, 0)
-        for i in range(5,26):
+        self.assertEqual(len(ht), 0)
+        for i in range(5, 26):
             ht.insert(i, i + 10)
         self.assertEqual(ht.size, 31)
         self.assertEqual(ht.occupancy, 21)
+        self.assertEqual(len(ht), 21)
 
 
 if __name__ == '__main__':
