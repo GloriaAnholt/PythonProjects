@@ -3,43 +3,47 @@
 # @totallygloria
 
 
-'''
-Implementation of a Binary Tree using a python class.
-'''
-
 
 class BinaryTree(object):
+    """ Implementation of a Binary Tree using a python class. """
 
     def __init__(self, value):
         self.key = value
         self.lc = None
         self.rc = None
 
-    def insert_left(self, node, value):
+    def insert_left(self, value):
 
-        newnode = NodeClass(value)
+        newnode = BinaryTree(value)
 
-        if node.lc is None:
-            node.lc = newnode
+        if self.lc is None:
+            self.lc = newnode
         else:
-            newnode.lc = node.lc
-            node.lc = newnode
+            newnode.lc = self.lc
+            self.lc = newnode
+
+    def insert_right(self, value):
+
+        newnode = BinaryTree(value)
+
+        if self.rc is None:
+            self.rc = newnode
+        else:
+            newnode.rc = self.rc
+            self.rc = newnode
+
+    def get_lc(self):
+        return self.lc.key
+
+    def get_rc(self):
+        return self.rc.key
+
+    def set_root(self, newval):
+        self.key = newval
+
+    def get_root(self):
+        return self.key
 
 
-class NodeClass(object):
-
-    def __init__(self, value):
-        self.key = value
-        self.lc = None
-        self.rc = None
 
 
-mytree = BinaryTree("oak")
-mytree.insert_left(mytree, "branch")
-mytree.insert_left(mytree.lc, "stick")
-mytree.insert_left(mytree.lc.lc, "twig")
-
-print mytree.key
-print mytree.lc.key
-print mytree.lc.lc.key
-print mytree.lc.lc.lc.key
