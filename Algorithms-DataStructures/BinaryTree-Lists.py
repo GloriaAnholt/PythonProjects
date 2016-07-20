@@ -19,7 +19,7 @@ def create_tree(r):
 def insert_left(root, newbranch):
 
     subtree = root.pop(1)       # 0 is root, 1 is left branch
-    if len(subtree > 1):
+    if len(subtree) > 1:
         root.insert(1, [newbranch, subtree, [] ])
     else:
         root.insert(1, [newbranch, [], [] ])
@@ -30,7 +30,7 @@ def insert_left(root, newbranch):
 def insert_right(root, newbranch):
 
     subtree = root.pop(2)       # 0 is root, 2 is right branch
-    if len(subtree > 1):
+    if len(subtree) > 1:
         root.insert(2, [newbranch, [], subtree])
     else:
         root.insert(2, [newbranch, [], []])
@@ -54,19 +54,12 @@ def get_right(root):
     return root[2]
 
 
-'''
-Example of a tree structure:
-mytree = ['a',  # root
-          ['b', # left subtree
-           ['d', [], [] ],
-           ['e', [], [] ] ],
-          ['c', # right subtree
-           ['f', [], [] ],
-           [] ]
-          ]
-
-print mytree
-print "Root is", mytree[0]
-print "Left subtree", mytree[1]
-print "Right subtree", mytree[2]
-'''
+oak = create_tree('Oak')
+print get_root(oak)
+insert_left(oak, "left fork")            # Inserts a new left under root of Oak
+insert_right(oak, "right fork")           # Inserts a new right under root of Oak
+insert_left(oak[1], "pop tarts")    # Inserts a new left under left fork under Oak
+insert_right(oak[2], "leaf")        # Inserts a new right under right under Oak
+insert_left(oak[2], "strawberry")   # Inserts a new left under right fork
+print get_left(oak)
+print get_right(oak)
