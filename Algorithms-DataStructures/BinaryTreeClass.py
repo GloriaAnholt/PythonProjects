@@ -33,10 +33,10 @@ class BinaryTree(object):
             self.rc = newnode
 
     def get_lc(self):
-        return self.lc.key
+        return self.lc
 
     def get_rc(self):
-        return self.rc.key
+        return self.rc
 
     def set_root(self, newval):
         self.key = newval
