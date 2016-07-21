@@ -44,6 +44,20 @@ class BinaryTree(object):
     def get_root(self):
         return self.key
 
+    def preorder(self):
+
+        print self.key
+        if self.lc:
+            self.lc.preorder()
+        if self.rc:
+            self.rc.preorder()
 
 
 
+oak = BinaryTree("A")
+oak.insert_left("B")
+oak.insert_right("C")
+oak.lc.insert_left("D")
+oak.lc.insert_right("E")
+
+oak.preorder()
