@@ -14,6 +14,13 @@ def preorder(tree):
         preorder(tree.get_rc())
 
 
+def postorder(tree):
+
+    if tree is not None:
+        postorder(tree.get_lc())
+        postorder(tree.get_rc())
+        print tree.get_root()
+
 
 oak = BinaryTree("A")
 oak.insert_left("B")
@@ -21,4 +28,5 @@ oak.insert_right("C")
 oak.lc.insert_left("D")
 oak.lc.insert_right("E")
 
-preorder(oak)
+# preorder(oak)
+postorder(oak)
