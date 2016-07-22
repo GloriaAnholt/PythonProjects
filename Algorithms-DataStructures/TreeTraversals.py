@@ -28,5 +28,5 @@ oak.insert_right("C")
 oak.lc.insert_left("D")
 oak.lc.insert_right("E")
 
-# preorder(oak)
-postorder(oak)
+preorder(oak)       # appears to work
+postorder(oak)      # appears to work
